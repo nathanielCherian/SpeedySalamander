@@ -33,3 +33,7 @@ Our games will follow our previously learned model, view, and control structure.
 - Control
   - Calculations
   - Timer
+# 2D
+For our project, 2D games like platformers with stages seems appropriate and we will try to create unique 2D games with stages stored in a database.
+# 3D
+For our projects
