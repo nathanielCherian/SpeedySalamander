@@ -27,4 +27,9 @@ Our games will follow our previously learned model, view, and control structure.
   - getSpeed
   - getPostition
   - getState
-
+- View
+  - Map
+  - Game
+- Control
+  - Calculations
+  - Timer
