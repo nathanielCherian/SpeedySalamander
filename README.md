@@ -9,7 +9,9 @@
 
 
 ## About
-
+Our project will have 2D/3D games using databases. 
+- [ ] 2D with stages
+- [ ] 3D running area
 
 ## Contributers
 | GitHub Username | Person |
