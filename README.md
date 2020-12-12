@@ -37,4 +37,13 @@ Our games will follow our previously learned model, view, and control structure.
 For our project, 2D games like platformers with stages seems appropriate and we will try to create unique 2D games with stages stored in a database.
 # 3D
 Since the nature of 3D projects naturally makes them harder to code, we will try to sitck to a 3D running game with auto obstacles.
-#3
+# Contributions
+- Code monitored through Github 
+  - Version Control
+  - Readme/Kanban board
+  - Commits/Lines/Deletions
+- Journal work
+  - Version History
+  - Collaboration
+  - Quality/Effort
+
