@@ -24,7 +24,7 @@ Our project will have 2D/3D games using databases.
 ## Games
 Our games will follow our previously learned model, view, and control structure. 
 - Model
- - getSpeed
- - getPostition
- - getState
+  - getSpeed
+  - getPostition
+  - getState
 
