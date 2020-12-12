@@ -3,8 +3,9 @@
 ## Quick Links
 - [Kanban](https://github.com/nathanielCherian/SpeedySalamanders/projects/1)
 - [Project Plan](https://docs.google.com/document/d/1mY7egnD32HIzg7C8C9wMr7rFPewVq4cXQqh_mbIy8mc/edit?usp=sharing)
-- [About](Aabout)
-- [Contributers](#Contributers)
+- [Contributions](https://github.com/nathanielCherian/SpeedySalamanders/graphs/contributors)
+- [About](https://github.com/nathanielCherian/SpeedySalamanders#about)
+- [Contributers](https://github.com/nathanielCherian/SpeedySalamanders#contributers)
 
 
 ## About
