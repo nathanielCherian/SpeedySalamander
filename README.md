@@ -21,18 +21,6 @@ Our project will have 2D/3D games using databases.
 | [@alextitov19](https://github.com/alextitov19) | Alex Titov |
 | [@bennyherrick](https://github.com/bennyherrick) | Benny Herrick |
 
-## Games
-Our games will follow our previously learned model, view, and control structure. 
-- Model
-  - getSpeed
-  - getPostition
-  - getState
-- View
-  - Map
-  - Game
-- Control
-  - Calculations
-  - Timer
 # 2D
 For our project, 2D games like platformers with stages seems appropriate and we will try to create unique 2D games with stages stored in a database.
 # 3D
