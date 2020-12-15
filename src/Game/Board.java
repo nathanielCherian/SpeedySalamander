@@ -1,6 +1,7 @@
 package Game;
 
 import Server.Client;
+import org.json.simple.JSONObject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,16 +9,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class Board extends JPanel {
 
     public int TICK_SPEED = 50;
 
-    Player player = new Player(1);
-    Client client = new Client(1, "192.168.1.22");
+    public int PLAYER_ID = 1;
+    Player player = new Player(PLAYER_ID);
+    Client client = new Client(PLAYER_ID, "127.0.0.1", 8888);
 
+    HashMap<Integer, ExternalPlayer> externalPlayers = new HashMap<>();
 
     public Board(){
 
@@ -37,7 +42,26 @@ public class Board extends JPanel {
 
             player.digest_keys(pressed_keys); //controls player action
 
-            System.out.println(client.makeRequest(player.getJSON()));
+            JSONObject server_data = client.makeRequest(player.getJSON());
+
+            
+            System.out.println(server_data.keySet());
+
+            for(Object player_id_ : server_data.keySet()){
+                int ep_id;
+                if((ep_id = Integer.parseInt((String) player_id_)) != PLAYER_ID){
+
+                    if(externalPlayers.containsKey(ep_id)){
+                        externalPlayers.get(ep_id).setFromJSON((JSONObject) server_data.get(player_id_));
+                    }else{
+                        ExternalPlayer ep = new ExternalPlayer(ep_id);
+                        ep.setFromJSON((JSONObject) server_data.get(player_id_));
+                        externalPlayers.put(ep_id, ep);
+                    }
+
+                }
+
+            }
 
             repaint();
         }
@@ -49,6 +73,11 @@ public class Board extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         player.paint(g2d);
+
+        for(ExternalPlayer ep: externalPlayers.values()){
+            ep.paint(g2d);
+        }
+
     }
 
 

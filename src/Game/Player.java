@@ -1,6 +1,8 @@
 package Game;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -76,4 +78,5 @@ public class Player {
         object.put("yPos", y);
         return object;
     }
+
 }

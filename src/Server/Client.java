@@ -1,6 +1,8 @@
 package Server;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -14,18 +16,20 @@ public class Client {
 
     public int playerID;
     public String ip;
-    public Client(int id_, String ip){
+    public int port;
+    public Client(int id_, String ip, int port){
         playerID = id_;
         this.ip = ip;
+        this.port = port;
     }
 
 
-    public String makeRequest(JSONObject data){
+    public JSONObject makeRequest(JSONObject data){
 
 
         String response = null;
 
-        try(Socket socket = new Socket(ip, 3000)){
+        try(Socket socket = new Socket(ip, port)){
 
             // Writing to server
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -43,7 +47,20 @@ public class Client {
         }
 
 
-        return response;
+        return parseJSON(response);
+    }
+
+
+    public static JSONObject parseJSON(String s){
+        JSONObject object = null;
+        try{
+            JSONParser parser = new JSONParser();
+            object = (JSONObject) parser.parse(s);
+        } catch(ParseException e){
+            e.printStackTrace();
+        }
+
+        return object;
     }
 
 
