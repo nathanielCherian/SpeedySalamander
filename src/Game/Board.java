@@ -76,8 +76,8 @@ public class Board extends JPanel {
         }
         Random rand = new Random();
         g.setColor(new Color(rand.nextInt(1), rand.nextInt(255), rand.nextInt(255)));
-        g2d.setStroke(new BasicStroke(3));
-        g.drawRect(2,0,600, 600);
+        g2d.setStroke(new BasicStroke(5));
+        g.drawRect(2,2,600, 600);
     }
 
     Set<Integer> pressed_keys = new HashSet<>();
