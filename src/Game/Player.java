@@ -19,7 +19,7 @@ public class Player {
     int r = 20;
 
     int speed = 5;
-
+    public static int xoff = 130, yoff = 20;
     public Player(int id_){
         playerID = id_;
     }

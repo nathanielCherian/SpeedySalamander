@@ -20,7 +20,7 @@ public class Board extends JPanel {
 
     public int PLAYER_ID = 1;
     Player player = new Player(PLAYER_ID);
-    Client client = new Client(PLAYER_ID, "127.0.0.1", 8888);
+    Client client = new Client(PLAYER_ID, "76.176.58.233", 8888);
 
     HashMap<Integer, ExternalPlayer> externalPlayers = new HashMap<>();
 
@@ -77,9 +77,9 @@ public class Board extends JPanel {
         for(ExternalPlayer ep: externalPlayers.values()){
             ep.paint(g2d);
         }
-
+        g.setColor(new Color(255, 150, 255));
+        g.drawRect(Player.xoff, Player.yoff, 512, 512);
     }
-
 
     Set<Integer> pressed_keys = new HashSet<>();
     public class GameKeyListener implements KeyListener {
