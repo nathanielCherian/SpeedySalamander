@@ -2,7 +2,7 @@ package Game;
 
 import Server.Client;
 import org.json.simple.JSONObject;
-
+import java.util.Random;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,9 +25,6 @@ public class Board extends JPanel {
     HashMap<Integer, ExternalPlayer> externalPlayers = new HashMap<>();
 
     public Board(){
-
-
-
 
         timer.start();
 
@@ -77,8 +74,10 @@ public class Board extends JPanel {
         for(ExternalPlayer ep: externalPlayers.values()){
             ep.paint(g2d);
         }
-        g.setColor(new Color(255, 150, 255));
-        g.drawRect(Player.xoff, Player.yoff, 512, 512);
+        Random rand = new Random();
+        g.setColor(new Color(rand.nextInt(1), rand.nextInt(255), rand.nextInt(255)));
+        g2d.setStroke(new BasicStroke(3));
+        g.drawRect(2,0,600, 600);
     }
 
     Set<Integer> pressed_keys = new HashSet<>();

@@ -3,7 +3,7 @@ package Game;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
+import java.util.Random;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.util.Map;
@@ -19,9 +19,10 @@ public class Player {
     int r = 20;
 
     int speed = 5;
-    public static int xoff = 130, yoff = 20;
     public Player(int id_){
         playerID = id_;
+        this.x = (int)(Math.random()*512);
+        this.y = (int)(Math.random()*512);
     }
 
     public void paint(Graphics2D g2d) {
