@@ -74,10 +74,12 @@ public class Board extends JPanel {
         for(ExternalPlayer ep: externalPlayers.values()){
             ep.paint(g2d);
         }
+        //random color for border
         Random rand = new Random();
         g.setColor(new Color(rand.nextInt(1), rand.nextInt(255), rand.nextInt(255)));
         g2d.setStroke(new BasicStroke(5));
         g.drawRect(2,2,600, 600);
+        //border creation
     }
 
     Set<Integer> pressed_keys = new HashSet<>();
@@ -88,11 +90,11 @@ public class Board extends JPanel {
 
         @Override
         public synchronized void keyPressed(KeyEvent e) {
-
+//key events for control
             if(e.getKeyCode() == 87){ // KEY: W
                 pressed_keys.add(e.getKeyCode());
                 //s.state = "NORTH";
-
+//works with diagonals
             }else if(e.getKeyCode() == 83){ // KEY: S
                 pressed_keys.add(e.getKeyCode());
                 //s.state = "SOUTH";

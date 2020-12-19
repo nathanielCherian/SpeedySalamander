@@ -52,19 +52,27 @@ public class Player {
 
 
     public void move_forward(){
-        y -= speed;
+        if (y - 2 - speed > 0) {
+            y -= speed;
+        }
     }
 
     public void move_backward(){
-        y += speed;
+        if (y + 2 + speed < 600) {
+            y += speed;
+        }
     }
 
     public void move_left(){
-        x -= speed;
+        if (x - 2 - speed > 0) {
+            x -= speed;
+        }
     }
 
     public void move_right(){
-        x += speed;
+        if (x + 2 + speed < 600) {
+            x += speed;
+        }
     }
 
     public Rectangle get_bounds(){
