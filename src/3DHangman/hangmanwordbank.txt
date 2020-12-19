@@ -8,7 +8,7 @@ Asking
 Astrology
 Astronomy
 Athletics
-Australian English
+Australian
 Avoiding
 Bacteria
 Badness
@@ -26,7 +26,7 @@ Beasts
 Beauty
 Beetles
 Beggars
-Beliefs & Believers
+Beliefs
 Bending
 Bengali
 Bacteria
@@ -45,12 +45,12 @@ Beasts
 Beauty
 Beetles
 Beggars
-Beliefs & Believers
+Beliefs
 Bending
 Bengali
 Cakes
 Calming
-Canadian English
+Canadian
 Candles
 Card Games
 Carib
@@ -91,7 +91,7 @@ Deer
 Denying
 Desserts
 Diets
-Digging & Burying
+Digging
 Directions
 Dirtiness
 Dislike
@@ -104,7 +104,7 @@ Duffers
 Dumplings
 Dutch
 Dying
-Facial Expression
+Facial
 Fainting
 Falconry
 Fatigue
@@ -115,7 +115,7 @@ Finnish
 Firearms
 Fish
 Fishing
-Fish Dishes
+Fish
 Flies
 Flowers
 Fools
@@ -141,7 +141,7 @@ Hebrew
 Helping
 Heraldry
 Horses
-Horse Racing
+Horse
 Hospitals
 Hottentot
 Hungarian
@@ -156,9 +156,9 @@ Killing
 Kindred
 Knots
 Korean
-Legwear
-Lifting & Carrying
-Literary Forms
+Leg
+Lifting
+Literary
 Loading
 Magic
 Malagasy
@@ -168,37 +168,36 @@ Maltese
 Maori
 Marathi
 Naming
-Native American
-Native Australian
-Neckwear
+Native
+Native
+Neck
 Nepali
 Old Norse
 Optics
 Ornament
-Other Crafts
-Other Mammals
-Other Receptacles
+Crafts
+Mammals
+Receptacles
 Persian
 Pesticides
 Phobias
 Phones
 Photography
 Piercing
-Pies & Pastries
+Pies
 Pigs
-Pinnipeds
+Pin
 Quote
 Quick
 Quirk
 Reptiles
 Rhetoric
-Rice Dishes
+Rice
 Riding
 Sailing
 Salads
-Salts & Esters
+Salts
 Samoan
-Sanskrit
 Sauces
 Sausages
 Scattering
@@ -206,7 +205,7 @@ Scots
 Tagalog
 Tahitian
 Tamil
-Tea & Coffee
+Tea
 Tennis
 Textual
 Textiles
@@ -217,3 +216,27 @@ Throwing
 Tibetan
 Time
 Underwear
+Vietnamese
+Viruses
+Vitality
+Vitamins
+Vomiting
+Wanting
+Warmth
+Water
+Weaning
+Wimps
+Winds
+Wood
+Woodwork
+Wrestling
+xerox
+Yoga
+Youth
+Young
+Yellow
+Yam
+Yeast
+Zoo
+Zoology
+Zoom
