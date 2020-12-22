@@ -1,0 +1,24 @@
+<component name="libraryTable">
+  <library name="com.amazonaws:aws-java-sdk-dynamodb:1.11.911" type="repository">
+    <properties maven-id="com.amazonaws:aws-java-sdk-dynamodb:1.11.911" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/aws-java-sdk-dynamodb-1.11.911.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/aws-java-sdk-s3-1.11.911.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/aws-java-sdk-kms-1.11.911.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/aws-java-sdk-core-1.11.911.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/httpclient-4.5.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/httpcore-4.4.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.11.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ion-java-1.0.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-databind-2.6.7.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-annotations-2.6.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-core-2.6.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jackson-dataformat-cbor-2.6.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/joda-time-2.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jmespath-java-1.11.911.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
