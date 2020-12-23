@@ -130,7 +130,7 @@ public class Player {
     }
 
     public void move_backward(){
-        if (y + 2 + speed < 600) {
+        if (y + 2 + speed < 512) {
             y += speed;
         }
 
@@ -146,7 +146,7 @@ public class Player {
     }
 
     public void move_right(){
-        if (x + 2 + speed < 600) {
+        if (x + 2 + speed < 512) {
             x += speed;
         }
 

@@ -24,6 +24,8 @@ public class Board extends JPanel {
     public boolean MULTIPLAYER_ENABLED = false;
     Client client;
 
+    Background background = new Background();
+
     HashMap<Integer, ExternalPlayer> externalPlayers = new HashMap<>();
 
 
@@ -84,6 +86,8 @@ public class Board extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
+        background.paint(g2d);
+
         player.paint(g2d); //paint player
 
         for(ExternalPlayer ep: externalPlayers.values()){ //paint any other players
@@ -95,12 +99,13 @@ public class Board extends JPanel {
     }
 
 
+
     void createBorder(Graphics2D g2d){
         //random color for border
         Random rand = new Random();
-        g2d.setColor(new Color(100,100,0));
+        g2d.setColor(new Color(0, 0, 0));
         g2d.setStroke(new BasicStroke(5));
-        g2d.drawRect(2,2,600, 600);
+        g2d.drawRect(2,2,510, 510);
         //border creation
     }
 
