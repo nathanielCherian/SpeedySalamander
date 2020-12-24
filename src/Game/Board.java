@@ -2,7 +2,9 @@ package Game;
 
 import Game.Entities.ExternalPlayer;
 import Game.Entities.Player;
+import Game.Objects.Tree;
 import Game.Server.Client;
+import com.sun.jdi.ThreadReference;
 import org.json.simple.JSONObject;
 
 import java.util.*;
@@ -25,6 +27,7 @@ public class Board extends JPanel {
     Client client;
 
     Background background = new Background();
+    Tree tree = new Tree(100,100);
 
     HashMap<Integer, ExternalPlayer> externalPlayers = new HashMap<>();
 
@@ -87,6 +90,7 @@ public class Board extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         background.paint(g2d);
+        tree.paint(g2d);
 
         player.paint(g2d); //paint player
 
