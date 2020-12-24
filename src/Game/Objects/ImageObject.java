@@ -1,28 +1,29 @@
 package Game.Objects;
 
+import Game.Paintable;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Object {
+public class ImageObject extends Paintable {
 
-    public int x;
-    public int y;
-    public int width;
-    public int height;
+
     public String basepath = new File("").getAbsolutePath();
     public BufferedImage objectImage;
 
-    public Object(int x, int y){
-        this.x = x;
-        this.y = y;
+    public ImageObject(int x, int y) {
+        super(x, y);
     }
+
 
     void setImage(String filePath){
         try{
             objectImage = ImageIO.read(new File(basepath+filePath));
+            this.width = objectImage.getWidth();
+            this.height = objectImage.getHeight();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -33,7 +34,4 @@ public class Object {
     }
 
 
-    public Rectangle getBoundingBox(){
-        return new Rectangle(x, y, width, height);
-    }
 }

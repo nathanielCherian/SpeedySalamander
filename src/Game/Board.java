@@ -2,6 +2,7 @@ package Game;
 
 import Game.Entities.ExternalPlayer;
 import Game.Entities.Player;
+import Game.Objects.Coin;
 import Game.Objects.Tree;
 import Game.Server.Client;
 import com.sun.jdi.ThreadReference;
@@ -26,8 +27,8 @@ public class Board extends JPanel {
     public boolean MULTIPLAYER_ENABLED = false;
     Client client;
 
-    Background background = new Background();
-    Tree tree = new Tree(100,100);
+    Scene scene = new Scene();
+
 
     HashMap<Integer, ExternalPlayer> externalPlayers = new HashMap<>();
 
@@ -36,16 +37,26 @@ public class Board extends JPanel {
 
         timer.start();
 
-
-
         if(MULTIPLAYER_ENABLED){
             client = new Client(PLAYER_ID, "76.176.58.233", 8888);
         }
+
+
+        packScene();
 
         addKeyListener(new GameKeyListener());
         setFocusable(true);
     }
 
+
+    void packScene(){
+        Background background = new Background();
+        scene.add(background);
+        scene.add(new Tree(100,100));
+        scene.add(new Tree(140,100));
+        scene.add(new Coin(300,300));
+
+    }
 
 
     void updatePlayers(){
@@ -71,7 +82,7 @@ public class Board extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            player.digest_keys(pressed_keys); //controls player action
+            player.digest_keys(pressed_keys, scene.children); //controls player action
 
 
             if(MULTIPLAYER_ENABLED){
@@ -89,8 +100,7 @@ public class Board extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        background.paint(g2d);
-        tree.paint(g2d);
+        scene.paint(g2d);
 
         player.paint(g2d); //paint player
 

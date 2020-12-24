@@ -1,5 +1,6 @@
 package Game.Entities;
 
+import Game.Paintable;
 import com.amazonaws.services.dynamodbv2.xspec.B;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,12 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.Buffer;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
-import java.util.Map;
-import java.util.Set;
 
 public class Player {
 
@@ -35,8 +33,8 @@ public class Player {
     int speed = 5;
     public Player(int id_){
         playerID = id_;
-        this.x = (int)(Math.random()*512);
-        this.y = (int)(Math.random()*512);
+        this.x = 200;//(int)(Math.random()*512);
+        this.y = 200;//(int)(Math.random()*512);
 
 
 
@@ -99,7 +97,7 @@ public class Player {
 
     );
 
-    public void digest_keys(Set<Integer> pressed_keys){
+    public void digest_keys(Set<Integer> pressed_keys, ArrayList<Paintable> objects){
 
         if(pressed_keys.size() == 0){
             avatarMotionState = 0;
@@ -116,8 +114,26 @@ public class Player {
             key_map.getOrDefault(code, ()->{}).run();
         }
 
+        ArrayList<Paintable> toremove = new ArrayList<>();
+        for(Paintable object: objects){
 
-        
+            if(this.getBoundingBox().intersects(object.getBoundingBox())){
+
+                if(object.isSolid){
+                    speed *= -1;
+                    for (int code: pressed_keys){
+                        key_map.getOrDefault(code, ()->{}).run();
+                    }
+                    speed *= -1;
+
+                }else if(object.isCollectable){
+                    toremove.add(object);
+                }
+
+            }
+        }
+        objects.removeAll(toremove);
+
     }
 
 
@@ -153,7 +169,7 @@ public class Player {
         avatarFacing = 2;
     }
 
-    public Rectangle get_bounds(){
+    public Rectangle getBoundingBox(){
         return new Rectangle(x, y, r, r);
     }
 

@@ -6,18 +6,18 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Background {
+public class Background extends Paintable{
 
     public BufferedImage backgroundTile;
 
     public Background(){
+        super(0,0);
 
         try{
             _loadBackgroundTile();
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
 
     void _loadBackgroundTile() throws IOException {
