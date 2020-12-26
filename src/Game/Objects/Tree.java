@@ -7,8 +7,8 @@ public class Tree extends ImageObject {
 
     public Tree(int x, int y){
         super(x,y);
-        setImage("\\src\\Game\\Resources\\Environment\\summer_tree.png");
         this.ID = "TREE";
+        setImage("\\src\\Game\\Resources\\Environment\\summer_tree.png");
 
         this.isSolid = true;
     }

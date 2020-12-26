@@ -2,9 +2,9 @@ package Game;
 
 import java.awt.*;
 
-public class Paintable {
+public abstract class Paintable {
 
-    public static String ID;
+    public String ID; //All objects must be registered with ID
 
     public int x;
     public int y;
@@ -26,4 +26,5 @@ public class Paintable {
     public Rectangle getBoundingBox(){
         return new Rectangle(x, y, width, height);
     }
+
 }

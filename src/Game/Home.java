@@ -16,6 +16,7 @@ public class Home extends JFrame {
 
 
     public Home(){
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(512+18,512+42));
 

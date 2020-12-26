@@ -32,9 +32,20 @@ public class Player extends Paintable{
 
     public Player(int id_){
         super(200,200);
-        this.ID = "PLAYER";
         playerID = id_;
+        this.ID = "PLAYER";
 
+        createAvatarImage();
+
+
+        //Creating Listeners
+        addCollisionListener(new PlayerCollisionListener());
+        addCoinCollectListener(new PlayerCollectCoinListener());
+
+    }
+
+
+    void createAvatarImage(){
         // Creating images
         try{
 
@@ -49,14 +60,8 @@ public class Player extends Paintable{
         }catch (IOException e){
             e.printStackTrace();
         }
-
-
-        //Creating Listeners
-        addCollisionListener(new PlayerCollisionListener());
-        addCoinCollectListener(new PlayerCollectCoinListener());
-
-
     }
+
 
     BufferedImage[][] _splitAvatarSheet(String filePath) throws IOException {
         //splits 16 by 16 character sheet into induvidual BufferedImages
@@ -77,9 +82,11 @@ public class Player extends Paintable{
     }
 
 
+
+
     //When user collides with another object
     ArrayList<CollisionListener> collisionListeners = new ArrayList<>();
-    void addCollisionListener(CollisionListener collisionListener){
+    public void addCollisionListener(CollisionListener collisionListener){
         collisionListeners.add(collisionListener);
     }
     void executeCollisionListener(Paintable collidedObject){
@@ -90,7 +97,7 @@ public class Player extends Paintable{
     private class PlayerCollisionListener implements CollisionListener{
         @Override
         public void onCollide(Paintable obj1, Paintable obj2) {
-            System.out.println(obj2.ID); //THERE IS A BIG PROBLEM HERE WITH ID FIX IT LATER!!!
+
             if(obj2.isSolid){
                 speed *= -1;
                 for (int code: pressed_keys){
@@ -108,9 +115,10 @@ public class Player extends Paintable{
         }
     }
 
+
     //When user picks up a coin
     ArrayList<CoinCollectListener> coinCollectListeners = new ArrayList<>();
-    void addCoinCollectListener(CoinCollectListener coinCollectListener){
+    public void addCoinCollectListener(CoinCollectListener coinCollectListener){
         coinCollectListeners.add(coinCollectListener);
     }
     void executeCoinCollectListener(Coin coin){
@@ -155,7 +163,7 @@ public class Player extends Paintable{
     );
 
     Set<Integer> pressed_keys;
-    public void digest_keys(Set<Integer> pressed_keys, ArrayList<Paintable> objects){
+    public void digest_keys(Set<Integer> pressed_keys){
         this.pressed_keys = pressed_keys;
         if(pressed_keys.size() == 0){
             avatarMotionState = 0;
@@ -173,30 +181,15 @@ public class Player extends Paintable{
         }
 
 
-        ArrayList<Paintable> toremove = new ArrayList<>();
+    }
+
+    public void checkCollisions(ArrayList<Paintable> objects){
         for(Paintable object: objects){
 
             if(this.getBoundingBox().intersects(object.getBoundingBox())){
-
                 executeCollisionListener(object);
-
-                /*
-                if(object.isSolid){
-                    speed *= -1;
-                    for (int code: pressed_keys){
-                        key_map.getOrDefault(code, ()->{}).run();
-                    }
-                    speed *= -1;
-
-                }else if(object.isCollectable){
-                    toremove.add(object);
-                }*/
-
-
             }
         }
-        objects.removeAll(toremove);
-
     }
 
 

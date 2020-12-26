@@ -10,7 +10,6 @@ import java.io.IOException;
 public class Coin extends AnimatedObject {
 
 
-
     public Coin(int x, int y) {
         super(x, y);
         setImageStates();
@@ -38,7 +37,7 @@ public class Coin extends AnimatedObject {
             e.printStackTrace();
         }
 
-        System.out.println(imageStates);
+        //System.out.println(imageStates);
     }
 
 

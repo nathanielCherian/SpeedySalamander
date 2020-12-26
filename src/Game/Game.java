@@ -8,10 +8,11 @@ import Game.Objects.Coin;
 import Game.Objects.Tree;
 
 public class Game {
-    public static String BACKGROUND = Background.ID;
-    public static String PLAYER = Player.ID;
-    public static String EXTERNAL_PLAYER = ExternalPlayer.ID;
-    public static String COIN = Coin.ID;
-    public static String TREE = Tree.ID;
+
+    public static final String BACKGROUND = "BACKGROUND";
+    public static final String PLAYER = "PLAYER";
+    public static final String TREE = "TREE";
+    public static final String EXTERNAL_PLAYER = "EPLAYER";
+    public static final String COIN = "COIN";
 
 }

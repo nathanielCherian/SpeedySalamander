@@ -56,6 +56,8 @@ public class Board extends JPanel {
         scene.add(new Tree(140,100));
         scene.add(new Coin(300,300));
 
+        //register listeners
+        player.addCoinCollectListener(scene.coinCollected);
     }
 
 
@@ -83,9 +85,10 @@ public class Board extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             scene.purgeChildren(); //Clearing deleted objects
+            scene.addChildren(); //Adding objects waiting in queue
 
-
-            player.digest_keys(pressed_keys, scene.children); //controls player action
+            player.digest_keys(pressed_keys); //controls player action
+            player.checkCollisions(scene.children);
 
             if(MULTIPLAYER_ENABLED){
                 updatePlayers();
