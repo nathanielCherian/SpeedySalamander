@@ -7,16 +7,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Coin extends AnimatedObject implements Listener {
+public class Coin extends AnimatedObject {
+
+
 
     public Coin(int x, int y) {
         super(x, y);
         setImageStates();
+        this.ID = "COIN";
 
         this.isCollectable = true;
     }
-
-
 
 
     @Override

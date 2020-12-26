@@ -8,10 +8,12 @@ import java.io.IOException;
 
 public class Background extends Paintable{
 
+
     public BufferedImage backgroundTile;
 
     public Background(){
         super(0,0);
+        this.ID = "BACKGROUND";
 
         try{
             _loadBackgroundTile();

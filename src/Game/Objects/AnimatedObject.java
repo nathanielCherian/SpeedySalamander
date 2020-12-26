@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-public class AnimatedObject extends Paintable {
+public abstract class AnimatedObject extends Paintable {
 
 
     int state = 0;

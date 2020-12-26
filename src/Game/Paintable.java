@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class Paintable {
 
+    public static String ID;
+
     public int x;
     public int y;
     public int width;

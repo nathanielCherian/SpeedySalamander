@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class ImageObject extends Paintable {
+public abstract class ImageObject extends Paintable {
 
 
     public String basepath = new File("").getAbsolutePath();

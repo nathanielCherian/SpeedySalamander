@@ -1,7 +1,11 @@
 package Game.Entities;
 
+import Game.Game;
+import Game.Listeners.CoinCollectListener;
 import Game.Listeners.CollisionListener;
+import Game.Objects.Coin;
 import Game.Paintable;
+import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
@@ -13,8 +17,8 @@ import java.awt.*;
 
 public class Player extends Paintable{
 
-    int playerID;
 
+    int playerID;
 
     public BufferedImage[][][] avatarAnimations = new BufferedImage[3][8][8];
     int avatarMotionState = 0; // 0=idle, 1=walking 2=running
@@ -23,11 +27,13 @@ public class Player extends Paintable{
     int r = 20;
     int speed = 5;
 
+    //Stored data about player
+    int totalCoins = 0;
 
     public Player(int id_){
         super(200,200);
+        this.ID = "PLAYER";
         playerID = id_;
-
 
         // Creating images
         try{
@@ -47,6 +53,7 @@ public class Player extends Paintable{
 
         //Creating Listeners
         addCollisionListener(new PlayerCollisionListener());
+        addCoinCollectListener(new PlayerCollectCoinListener());
 
 
     }
@@ -70,7 +77,7 @@ public class Player extends Paintable{
     }
 
 
-    //LISTENERS
+    //When user collides with another object
     ArrayList<CollisionListener> collisionListeners = new ArrayList<>();
     void addCollisionListener(CollisionListener collisionListener){
         collisionListeners.add(collisionListener);
@@ -80,25 +87,43 @@ public class Player extends Paintable{
             collisionListener.onCollide(this, collidedObject);
         });
     }
-
     private class PlayerCollisionListener implements CollisionListener{
-
         @Override
         public void onCollide(Paintable obj1, Paintable obj2) {
-            System.out.println(obj2);
-
+            System.out.println(obj2.ID); //THERE IS A BIG PROBLEM HERE WITH ID FIX IT LATER!!!
             if(obj2.isSolid){
                 speed *= -1;
                 for (int code: pressed_keys){
                     key_map.getOrDefault(code, ()->{}).run();
                 }
                 speed *= -1;
-
             }else if(obj2.isCollectable){
                 obj2.toDelete = true;
+
+                if(obj2.ID == Game.COIN){
+                    executeCoinCollectListener((Coin) obj2);
+                }
+
             }
+        }
+    }
 
+    //When user picks up a coin
+    ArrayList<CoinCollectListener> coinCollectListeners = new ArrayList<>();
+    void addCoinCollectListener(CoinCollectListener coinCollectListener){
+        coinCollectListeners.add(coinCollectListener);
+    }
+    void executeCoinCollectListener(Coin coin){
 
+        coinCollectListeners.forEach(coinCollectListener -> {
+            coinCollectListener.onCollectCoin(coin);
+        });
+    }
+    private class PlayerCollectCoinListener implements CoinCollectListener{
+        @Override
+        public void onCollectCoin(Coin coin) {
+            System.out.println("Collected Coin!");
+            totalCoins++;
         }
     }
 
