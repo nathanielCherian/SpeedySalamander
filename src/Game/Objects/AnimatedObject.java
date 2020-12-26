@@ -8,6 +8,7 @@ import java.io.File;
 
 public class AnimatedObject extends Paintable {
 
+
     int state = 0;
     int totalStates;
     BufferedImage[] imageStates;

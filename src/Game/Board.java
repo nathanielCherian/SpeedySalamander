@@ -82,8 +82,10 @@ public class Board extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            player.digest_keys(pressed_keys, scene.children); //controls player action
+            scene.purgeChildren(); //Clearing deleted objects
 
+
+            player.digest_keys(pressed_keys, scene.children); //controls player action
 
             if(MULTIPLAYER_ENABLED){
                 updatePlayers();

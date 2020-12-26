@@ -9,6 +9,8 @@ public class Paintable {
     public int width;
     public int height;
 
+    public Boolean toDelete = false;
+
     public Boolean isSolid = false;
     public Boolean isCollectable = false;
 

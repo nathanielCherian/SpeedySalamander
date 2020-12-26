@@ -1,11 +1,13 @@
 package Game.Objects;
 
+import Game.Listeners.Listener;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Coin extends AnimatedObject{
+public class Coin extends AnimatedObject implements Listener {
 
     public Coin(int x, int y) {
         super(x, y);
@@ -13,6 +15,8 @@ public class Coin extends AnimatedObject{
 
         this.isCollectable = true;
     }
+
+
 
 
     @Override
@@ -35,5 +39,7 @@ public class Coin extends AnimatedObject{
 
         System.out.println(imageStates);
     }
+
+
 
 }

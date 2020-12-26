@@ -22,5 +22,10 @@ public class Scene{
         }
     }
 
+    //Periodically call to update scene
+    public void purgeChildren(){
+        children.removeIf(child -> child.toDelete);
+    }
+
 
 }

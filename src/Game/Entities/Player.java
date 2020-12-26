@@ -1,43 +1,35 @@
 package Game.Entities;
 
+import Game.Listeners.CollisionListener;
 import Game.Paintable;
-import com.amazonaws.services.dynamodbv2.xspec.B;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.*;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
-public class Player {
+public class Player extends Paintable{
 
     int playerID;
 
-    int x = 0;
-    int y = 0;
 
     public BufferedImage[][][] avatarAnimations = new BufferedImage[3][8][8];
     int avatarMotionState = 0; // 0=idle, 1=walking 2=running
     int avatarAnimationState = 0; // avatar state of animation 0-7
     int avatarFacing = 0; // 0 North
-
-
     int r = 20;
-
     int speed = 5;
+
+
     public Player(int id_){
+        super(200,200);
         playerID = id_;
-        this.x = 200;//(int)(Math.random()*512);
-        this.y = 200;//(int)(Math.random()*512);
 
 
-
+        // Creating images
         try{
 
             String base_path = new File("").getAbsolutePath();
@@ -45,13 +37,19 @@ public class Player {
             avatarAnimations[1] = _splitAvatarSheet(base_path+"\\src\\Game\\Resources\\Avatar\\StrafeSheet.png"); //Walking
             avatarAnimations[2] = _splitAvatarSheet(base_path+"\\src\\Game\\Resources\\Avatar\\RunSheet.png"); //Running
 
+            this.width = avatarAnimations[0][0][0].getWidth();
+            this.height = avatarAnimations[0][0][0].getHeight();
+
         }catch (IOException e){
             e.printStackTrace();
         }
 
+
+        //Creating Listeners
+        addCollisionListener(new PlayerCollisionListener());
+
+
     }
-
-
 
     BufferedImage[][] _splitAvatarSheet(String filePath) throws IOException {
         //splits 16 by 16 character sheet into induvidual BufferedImages
@@ -70,6 +68,40 @@ public class Player {
 
         return avatarDirections;
     }
+
+
+    //LISTENERS
+    ArrayList<CollisionListener> collisionListeners = new ArrayList<>();
+    void addCollisionListener(CollisionListener collisionListener){
+        collisionListeners.add(collisionListener);
+    }
+    void executeCollisionListener(Paintable collidedObject){
+        collisionListeners.forEach(collisionListener -> {
+            collisionListener.onCollide(this, collidedObject);
+        });
+    }
+
+    private class PlayerCollisionListener implements CollisionListener{
+
+        @Override
+        public void onCollide(Paintable obj1, Paintable obj2) {
+            System.out.println(obj2);
+
+            if(obj2.isSolid){
+                speed *= -1;
+                for (int code: pressed_keys){
+                    key_map.getOrDefault(code, ()->{}).run();
+                }
+                speed *= -1;
+
+            }else if(obj2.isCollectable){
+                obj2.toDelete = true;
+            }
+
+
+        }
+    }
+
 
 
     public void paint(Graphics2D g2d) {
@@ -97,8 +129,9 @@ public class Player {
 
     );
 
+    Set<Integer> pressed_keys;
     public void digest_keys(Set<Integer> pressed_keys, ArrayList<Paintable> objects){
-
+        this.pressed_keys = pressed_keys;
         if(pressed_keys.size() == 0){
             avatarMotionState = 0;
             return;
@@ -114,11 +147,15 @@ public class Player {
             key_map.getOrDefault(code, ()->{}).run();
         }
 
+
         ArrayList<Paintable> toremove = new ArrayList<>();
         for(Paintable object: objects){
 
             if(this.getBoundingBox().intersects(object.getBoundingBox())){
 
+                executeCollisionListener(object);
+
+                /*
                 if(object.isSolid){
                     speed *= -1;
                     for (int code: pressed_keys){
@@ -128,7 +165,8 @@ public class Player {
 
                 }else if(object.isCollectable){
                     toremove.add(object);
-                }
+                }*/
+
 
             }
         }
@@ -169,9 +207,6 @@ public class Player {
         avatarFacing = 2;
     }
 
-    public Rectangle getBoundingBox(){
-        return new Rectangle(x, y, r, r);
-    }
 
     public JSONObject getJSON(){
 
