@@ -1,5 +1,7 @@
 package Game;
 
+import Game.Entities.Player;
+import Game.GUI.BasicElement;
 import Game.Listeners.CoinCollectListener;
 import Game.Objects.Coin;
 
@@ -16,6 +18,11 @@ public class Scene{
     public ArrayList<Paintable> children = new ArrayList<>();
     public ArrayList<Paintable> childrenQueue = new ArrayList<>(); //children waiting for queue to finish to be added
 
+    public Player player;
+    public Paintable background;
+    public ArrayList<BasicElement> guiElements = new ArrayList<>();
+
+
     public CoinCollected coinCollected = new CoinCollected();
 
     public Scene(){
@@ -30,11 +37,33 @@ public class Scene{
         childrenQueue.add(o);
     }
 
+    public void addPlayer(Player p){
+        player = p;
+    }
+    public void addBackground(Paintable o){
+        background = o;
+    }
+    public void addGUIElement(BasicElement element){
+        guiElements.add(element);
+    }
+
 
     public void paint(Graphics2D g2d){
+
+        //All paintables must be drawn in this order
+
+        background.paint(g2d);
+
         for(Paintable child: children){
             child.paint(g2d);
         }
+
+        player.paint(g2d);
+
+        for(BasicElement element: guiElements){
+            element.paint(g2d);
+        }
+
     }
 
     //Periodically call to update scene

@@ -18,7 +18,7 @@ public class Home extends JFrame {
     public Home(){
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(512+18,512+42));
+        setPreferredSize(new Dimension(Game.WIDTH+18,Game.HEIGHT+42));
 
         add(new Board());
 

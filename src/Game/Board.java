@@ -2,6 +2,8 @@ package Game;
 
 import Game.Entities.ExternalPlayer;
 import Game.Entities.Player;
+import Game.GUI.BasicElement;
+import Game.GUI.HealthBar;
 import Game.Objects.Coin;
 import Game.Objects.Tree;
 import Game.Server.Client;
@@ -50,13 +52,20 @@ public class Board extends JPanel {
 
 
     void packScene(){
-        Background background = new Background();
-        scene.add(background);
+
+        //add Background
+        scene.addBackground(new Background());
+        scene.addPlayer(player);
+
+        //Add objects
         scene.add(new Tree(100,100));
         scene.add(new Tree(140,100));
         scene.add(new Coin(300,300));
 
-        //register listeners
+        //Add GUI Elements
+        scene.addGUIElement(new HealthBar(50,100));
+
+        //register listeners for scene
         player.addCoinCollectListener(scene.coinCollected);
     }
 
@@ -107,7 +116,6 @@ public class Board extends JPanel {
 
         scene.paint(g2d);
 
-        player.paint(g2d); //paint player
 
         for(ExternalPlayer ep: externalPlayers.values()){ //paint any other players
             ep.paint(g2d);

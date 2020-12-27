@@ -11,7 +11,6 @@ import java.io.IOException;
 public abstract class ImageObject extends Paintable {
 
 
-    public String basepath = new File("").getAbsolutePath();
     public BufferedImage objectImage;
 
     public ImageObject(int x, int y) {
