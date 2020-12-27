@@ -7,6 +7,15 @@
 - [About](https://github.com/nathanielCherian/SpeedySalamanders#about)
 - [Contributers](https://github.com/nathanielCherian/SpeedySalamanders#contributers)
 
+## Usage
+Install the following dependencies with Maven
+- ```com.amazonaws:aws-java-sdk-dynamodb:1.11.911```
+- ```com.googlecode.json-simple:json-simple:1.1.1```
+
+The project also requires Java 15
+
+To start the game run ```Home.Main``` located within the ```Game``` package.
+
 
 ## About
 Our project will have 2D/3D games using databases. 

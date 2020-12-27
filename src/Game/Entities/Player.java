@@ -130,7 +130,7 @@ public class Player extends Paintable{
     private class PlayerCollectCoinListener implements CoinCollectListener{
         @Override
         public void onCollectCoin(Coin coin) {
-            System.out.println("Collected Coin!");
+            System.out.println("Coin Collect Event Triggered");
             totalCoins++;
         }
     }

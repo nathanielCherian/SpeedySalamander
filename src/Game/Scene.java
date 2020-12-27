@@ -53,9 +53,8 @@ public class Scene{
     private class CoinCollected implements CoinCollectListener {
         @Override
         public void onCollectCoin(Coin coin) {
+            //Adding a coin
             addToWaitingList(new Coin(rand.nextInt(300), rand.nextInt(300)));
-            System.out.println("added COin!");
-
         }
     }
 
