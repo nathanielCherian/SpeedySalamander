@@ -25,7 +25,6 @@ public class HealthBar extends BasicElement{
 
         g2d.setStroke(new BasicStroke(5));
         g2d.setColor(Color.black);
-        g2d.fill(elementArea);
 
         for(int i=0;i<heartCount;i++){
             int y = (this.y+(this.height - heart.getHeight())/2);

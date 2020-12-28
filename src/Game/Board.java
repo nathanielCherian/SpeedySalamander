@@ -63,7 +63,7 @@ public class Board extends JPanel {
         scene.add(new Coin(300,300));
 
         //Add GUI Elements
-        scene.addGUIElement(new HealthBar(50,100));
+        scene.addGUIElement(new HealthBar(25,75));
 
         //register listeners for scene
         player.addCoinCollectListener(scene.coinCollected);

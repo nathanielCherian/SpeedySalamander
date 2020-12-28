@@ -23,7 +23,11 @@ public class Scene{
     public ArrayList<BasicElement> guiElements = new ArrayList<>();
 
 
+    //Listeners
     public CoinCollected coinCollected = new CoinCollected();
+
+
+    boolean DEBUG = true;
 
     public Scene(){
 
@@ -56,12 +60,23 @@ public class Scene{
 
         for(Paintable child: children){
             child.paint(g2d);
+
+            if (DEBUG){
+                child.paintBox(g2d);
+            }
         }
 
         player.paint(g2d);
+        if (DEBUG){
+            player.paintBox(g2d);
+        }
 
         for(BasicElement element: guiElements){
             element.paint(g2d);
+
+            if (DEBUG){
+                element.paintBox(g2d);
+            }
         }
 
     }

@@ -31,6 +31,10 @@ public abstract class Paintable {
 
     public void paint(Graphics2D g2d){}
 
+    public void paintBox(Graphics2D g2d){
+        g2d.draw(getBoundingBox());
+    }
+
     public Rectangle getBoundingBox(){
         return new Rectangle(x, y, width, height);
     }

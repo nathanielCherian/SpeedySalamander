@@ -15,6 +15,7 @@ public class Coin extends AnimatedObject {
         setImageStates();
         this.ID = "COIN";
 
+
         this.isCollectable = true;
     }
 
