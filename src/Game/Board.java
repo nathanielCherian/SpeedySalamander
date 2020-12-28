@@ -5,6 +5,8 @@ import Game.Entities.Player;
 import Game.GUI.BasicElement;
 import Game.GUI.HealthBar;
 import Game.Objects.Coin;
+import Game.Objects.SmallRocks;
+import Game.Objects.ThornBush;
 import Game.Objects.Tree;
 import Game.Server.Client;
 import com.sun.jdi.ThreadReference;
@@ -60,13 +62,17 @@ public class Board extends JPanel {
         //Add objects
         scene.add(new Tree(100,100));
         scene.add(new Tree(140,100));
+        scene.add(new SmallRocks(250,200));
+        scene.add(new ThornBush(50,50));
         scene.add(new Coin(300,300));
 
         //Add GUI Elements
-        scene.addGUIElement(new HealthBar(25,75));
+        HealthBar hb = new HealthBar(25, 75);
+        scene.addGUIElement(hb);
 
         //register listeners for scene
         player.addCoinCollectListener(scene.coinCollected);
+        player.addDamageTakenListener(hb.decreaseHealthBar);
     }
 
 

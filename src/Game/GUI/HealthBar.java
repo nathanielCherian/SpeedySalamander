@@ -1,6 +1,7 @@
 package Game.GUI;
 
 import Game.Game;
+import Game.Listeners.DamageTakenListener;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -31,7 +32,15 @@ public class HealthBar extends BasicElement{
             g2d.drawImage(heart, this.x+(20*(i+1))+(i*heart.getWidth()), y, null);
         }
 
+    }
 
+
+    public BarDamageTakenListener decreaseHealthBar = new BarDamageTakenListener();
+    private class BarDamageTakenListener implements DamageTakenListener {
+        @Override
+        public void onDamageTaken(int damageTaken) {
+            System.out.println("DAMAGE TAKEN");
+        }
     }
 
 

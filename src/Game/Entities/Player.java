@@ -3,6 +3,7 @@ package Game.Entities;
 import Game.Game;
 import Game.Listeners.CoinCollectListener;
 import Game.Listeners.CollisionListener;
+import Game.Listeners.DamageTakenListener;
 import Game.Objects.Coin;
 import Game.Paintable;
 import com.amazonaws.services.dynamodbv2.xspec.S;
@@ -83,6 +84,15 @@ public class Player extends Paintable{
 
 
 
+    ArrayList<DamageTakenListener> damageTakenListeners = new ArrayList<>();
+    public void addDamageTakenListener(DamageTakenListener damageTakenListener){damageTakenListeners.add(damageTakenListener);}
+    void executeDamageTakenListener(int damageTaken){
+        damageTakenListeners.forEach(damageTakenListener -> {
+            damageTakenListener.onDamageTaken(damageTaken);
+        });
+    }
+
+
 
     //When user collides with another object
     ArrayList<CollisionListener> collisionListeners = new ArrayList<>();
@@ -110,8 +120,14 @@ public class Player extends Paintable{
                 if(obj2.ID == Game.COIN){
                     executeCoinCollectListener((Coin) obj2);
                 }
-
             }
+
+            if(obj2.ID == Game.THORN_BUSH){
+                executeDamageTakenListener(1);
+            }
+
+
+
         }
     }
 

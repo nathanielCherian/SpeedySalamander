@@ -27,7 +27,7 @@ public class Scene{
     public CoinCollected coinCollected = new CoinCollected();
 
 
-    boolean DEBUG = true;
+    boolean DEBUG = false;
 
     public Scene(){
 
