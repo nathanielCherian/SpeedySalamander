@@ -3,6 +3,7 @@ package Game;
 import Game.Entities.ExternalPlayer;
 import Game.Entities.Player;
 import Game.GUI.BasicElement;
+import Game.GUI.Border;
 import Game.GUI.HealthBar;
 import Game.Objects.Coin;
 import Game.Objects.SmallRocks;
@@ -67,12 +68,15 @@ public class Board extends JPanel {
         scene.add(new Coin(300,300));
 
         //Add GUI Elements
+        Border b = new Border();
+        scene.add(b);
         HealthBar hb = new HealthBar(25, 75);
         scene.addGUIElement(hb);
 
         //register listeners for scene
         player.addCoinCollectListener(scene.coinCollected);
         player.addDamageTakenListener(hb.decreaseHealthBar);
+        player.addDamageTakenListener(b.flashDamageBorder);
     }
 
 
@@ -128,7 +132,7 @@ public class Board extends JPanel {
         }
 
 
-        createBorder(g2d);
+        //createBorder(g2d);
     }
 
 
