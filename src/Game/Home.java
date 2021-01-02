@@ -1,5 +1,8 @@
 package Game;
 
+import Game.Sounds.Sound;
+import com.amazonaws.services.dynamodbv2.xspec.S;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,6 +19,8 @@ public class Home extends JFrame {
 
 
     public Home(){
+
+        //Sound.setPlaySound("\\src\\Game\\Resources\\Sounds\\stepdirt_1.wav");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(Game.WIDTH+18,Game.HEIGHT+42));

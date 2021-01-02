@@ -4,6 +4,8 @@ import Game.Entities.Player;
 import Game.GUI.BasicElement;
 import Game.Listeners.CoinCollectListener;
 import Game.Objects.Coin;
+import Game.Sounds.Sound;
+import com.amazonaws.services.dynamodbv2.xspec.S;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -98,6 +100,8 @@ public class Scene{
         @Override
         public void onCollectCoin(Coin coin) {
             //Adding a coin
+
+            Sound.setPlaySound("\\src\\Game\\Resources\\Sounds\\Coin\\coin.wav");
             addToWaitingList(new Coin(rand.nextInt(300), rand.nextInt(300)));
         }
     }
