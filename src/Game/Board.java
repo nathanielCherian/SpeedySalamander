@@ -1,17 +1,14 @@
 package Game;
 
-import Game.Entities.ExternalPlayer;
 import Game.Entities.Player;
-import Game.GUI.BasicElement;
 import Game.GUI.Border;
 import Game.GUI.HealthBar;
+import Game.Multiplayer.Client;
+import Game.Multiplayer.TempClientListener;
 import Game.Objects.Coin;
 import Game.Objects.SmallRocks;
 import Game.Objects.ThornBush;
 import Game.Objects.Tree;
-import Game.Server.Client;
-import com.sun.jdi.ThreadReference;
-import org.json.simple.JSONObject;
 
 import java.util.*;
 import javax.swing.*;
@@ -29,13 +26,11 @@ public class Board extends JPanel {
     public int TICK_SPEED = 50;
     Player player = new Player(PLAYER_ID);
 
-    public boolean MULTIPLAYER_ENABLED = false;
+    public boolean MULTIPLAYER_ENABLED = true;
     Client client;
 
     Scene scene = new Scene();
 
-
-    HashMap<Integer, ExternalPlayer> externalPlayers = new HashMap<>();
 
 
     public Board(){
@@ -43,7 +38,7 @@ public class Board extends JPanel {
         timer.start();
 
         if(MULTIPLAYER_ENABLED){
-            client = new Client(PLAYER_ID, "76.176.58.233", 8888);
+            client = new Client("127.0.0.1", 8888, new TempClientListener());
         }
 
 
@@ -73,6 +68,8 @@ public class Board extends JPanel {
         HealthBar hb = new HealthBar(25, 75);
         scene.addGUIElement(hb);
 
+        System.out.println(scene.toJSON());
+
         //register listeners for scene
         player.addCoinCollectListener(scene.coinCollected);
         player.addDamageTakenListener(hb.decreaseHealthBar);
@@ -81,6 +78,7 @@ public class Board extends JPanel {
 
 
     void updatePlayers(){
+        /*
         JSONObject server_data = client.makeRequest(player.getJSON());
         System.out.println(server_data.keySet());
         for(Object player_id_ : server_data.keySet()){
@@ -96,6 +94,7 @@ public class Board extends JPanel {
                 }
             }
         }
+    */
     }
 
 
@@ -104,14 +103,10 @@ public class Board extends JPanel {
         public void actionPerformed(ActionEvent e) {
 
             scene.purgeChildren(); //Clearing deleted objects
-            scene.addChildren(); //Adding objects waiting in queue
+            scene.addQueuedChildren(); //Adding objects waiting in queue
 
             player.digest_keys(pressed_keys); //controls player action
             player.checkCollisions(scene.children);
-
-            if(MULTIPLAYER_ENABLED){
-                updatePlayers();
-            }
 
 
             repaint();
@@ -126,10 +121,10 @@ public class Board extends JPanel {
 
         scene.paint(g2d);
 
-
-        for(ExternalPlayer ep: externalPlayers.values()){ //paint any other players
-            ep.paint(g2d);
+        if(MULTIPLAYER_ENABLED){
+            client.send(scene.player.toJSON().toJSONString());
         }
+
 
 
         //createBorder(g2d);

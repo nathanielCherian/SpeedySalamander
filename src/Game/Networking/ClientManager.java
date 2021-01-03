@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class ClientManager {
 
-    public ArrayList<Client> clients = new ArrayList<>();
+    public ArrayList<ClientInstance> clients = new ArrayList<>();
 
 
     public ClientManager(){
 
     }
 
-    public void add(Client client){
+    public void add(ClientInstance client){
         clients.add(client);
     }
 

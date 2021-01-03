@@ -146,7 +146,6 @@ public class Player extends Paintable{
     private class PlayerCollectCoinListener implements CoinCollectListener{
         @Override
         public void onCollectCoin(Coin coin) {
-            System.out.println("Coin Collect Event Triggered");
             totalCoins++;
         }
     }
@@ -242,12 +241,16 @@ public class Player extends Paintable{
     }
 
 
-    public JSONObject getJSON(){
+    public JSONObject toJSON(){
 
         JSONObject object = new JSONObject();
         object.put("playerID", playerID);
+        object.put("ID", ID);
         object.put("xPos", x);
         object.put("yPos", y);
+        object.put("avatarMotionState", avatarMotionState);
+        object.put("avatarFacing", avatarFacing);
+
         return object;
     }
 

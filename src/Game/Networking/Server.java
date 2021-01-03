@@ -3,13 +3,12 @@ package Game.Networking;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 
 class Server {
 
-    boolean open = true;
+    static boolean open = true;
 
-    public void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException {
 
         System.out.println("Server Started...");
 
@@ -21,7 +20,7 @@ class Server {
         while (open){
 
             Socket clientSocket = server.accept();
-            Client client = new Client(clientSocket);
+            ClientInstance client = new ClientInstance(clientSocket);
             String ip = client.getIP();
             System.out.println("user connected " + ip);
 

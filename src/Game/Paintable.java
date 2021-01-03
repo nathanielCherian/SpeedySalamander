@@ -1,5 +1,7 @@
 package Game;
 
+import org.json.simple.JSONObject;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -49,6 +51,14 @@ public abstract class Paintable {
             e.printStackTrace();
         }
         return img;
+    }
+
+    public JSONObject toJSON(){
+        JSONObject object = new JSONObject();
+        object.put("ID", ID);
+        object.put("xPos", x);
+        object.put("yPos", y);
+        return object;
     }
 
 }

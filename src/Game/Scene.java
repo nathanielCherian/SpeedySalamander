@@ -6,6 +6,8 @@ import Game.Listeners.CoinCollectListener;
 import Game.Objects.Coin;
 import Game.Sounds.Sound;
 import com.amazonaws.services.dynamodbv2.xspec.S;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,7 +17,6 @@ public class Scene{
 
     public int x;
     public int y;
-    public int w;
 
     public ArrayList<Paintable> children = new ArrayList<>();
     public ArrayList<Paintable> childrenQueue = new ArrayList<>(); //children waiting for queue to finish to be added
@@ -38,10 +39,9 @@ public class Scene{
 
     public void add(Paintable o){
         children.add(o);
-    }
-    public void addToWaitingList(Paintable o){
-        childrenQueue.add(o);
-    }
+    } //adding children directly
+    //adding children while still in game loop, avoid concurrent modification error
+    public void addToWaitingList(Paintable o){ childrenQueue.add(o); }
 
     public void addPlayer(Player p){
         player = p;
@@ -87,14 +87,39 @@ public class Scene{
     public void purgeChildren(){
         children.removeIf(child -> child.toDelete);
     }
-    public void addChildren(){
+    public void addQueuedChildren(){
         children.addAll(childrenQueue);
         childrenQueue.clear();
     }
 
 
-    Random rand = new Random();
+    public void createFromJSON(JSONObject object){
 
+
+    }
+
+    public JSONObject toJSON(){
+
+        JSONObject scene = new JSONObject();
+
+        scene.put("background", background.ID);
+        scene.put("mainPlayer", player.toJSON());
+
+        JSONArray childrenArray = new JSONArray();
+        for(Paintable child: children){
+            childrenArray.add(child.toJSON());
+        }
+
+        scene.put("children", childrenArray);
+
+        return scene;
+    }
+
+
+
+
+
+    Random rand = new Random();
     //Listeners
     private class CoinCollected implements CoinCollectListener {
         @Override

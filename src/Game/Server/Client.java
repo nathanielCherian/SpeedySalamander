@@ -68,7 +68,7 @@ public class Client {
 
         int PLAYER_ID = 0;
 
-        try(Socket socket = new Socket("127.0.0.1", 3000)){
+        try(Socket socket = new Socket("127.0.0.1", 8888)){
 
             // Writing to server
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
