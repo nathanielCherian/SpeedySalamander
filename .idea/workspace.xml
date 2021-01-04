@@ -19,9 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7665b83f-1b4b-4296-af7b-575d5b91a4c1" name="Default Changelist" comment="files">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="7665b83f-1b4b-4296-af7b-575d5b91a4c1" name="Default Changelist" comment="new">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -52,6 +50,14 @@
       <option name="presentableId" value="Default" />
       <updated>1608361425644</updated>
     </task>
+    <task id="LOCAL-00001" summary="new">
+      <created>1609778369748</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1609778369748</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -68,16 +74,24 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="files" />
-    <option name="LAST_COMMIT_MESSAGE" value="files" />
+    <MESSAGE value="new" />
+    <option name="LAST_COMMIT_MESSAGE" value="new" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="114" y="23" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1609778281758">
-      <screen x="0" y="23" width="1280" height="725" />
+    <state x="114" y="23" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1609779163079">
+      <screen x="0" y="23" width="1280" height="724" />
     </state>
+    <state x="114" y="23" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1280.724@0.23.1280.724" timestamp="1609779163079" />
     <state x="114" y="23" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1280.725@0.23.1280.725" timestamp="1609778281758" />
-    <state x="442" y="237" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1609777995086">
-      <screen x="0" y="23" width="1280" height="725" />
+    <state x="250" y="41" key="Vcs.Push.Dialog.v2" timestamp="1609778992227">
+      <screen x="0" y="23" width="1280" height="724" />
     </state>
+    <state x="250" y="41" key="Vcs.Push.Dialog.v2/0.23.1280.724@0.23.1280.724" timestamp="1609778992227" />
+    <state x="250" y="41" key="Vcs.Push.Dialog.v2/0.23.1280.725@0.23.1280.725" timestamp="1609778373255" />
+    <state x="442" y="237" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1609778976547">
+      <screen x="0" y="23" width="1280" height="724" />
+    </state>
+    <state x="442" y="237" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1280.724@0.23.1280.724" timestamp="1609778976547" />
     <state x="442" y="237" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1280.725@0.23.1280.725" timestamp="1609777995086" />
   </component>
 </project>
