@@ -17,7 +17,6 @@ public class Home extends JFrame {
         }
     }
 
-
     public Home(){
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,6 +26,4 @@ public class Home extends JFrame {
 
         pack();
     }
-
-
 }
