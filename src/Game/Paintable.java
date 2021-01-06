@@ -11,6 +11,7 @@ import java.io.IOException;
 public abstract class Paintable {
 
     public String ID; //All objects must be registered with ID
+    public String MULTIPLAYER_ID;
 
     public int x;
     public int y;
@@ -55,10 +56,16 @@ public abstract class Paintable {
 
     public JSONObject toJSON(){
         JSONObject object = new JSONObject();
-        object.put("ID", ID);
+        object.put("G_ID", ID); //game id
+        object.put("M_ID", MULTIPLAYER_ID); //multiplayer id
         object.put("xPos", x);
         object.put("yPos", y);
         return object;
     }
+
+    public static Paintable createFromJSON(JSONObject object){
+        return null;
+    }
+
 
 }

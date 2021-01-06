@@ -93,10 +93,7 @@ public class Scene{
     }
 
 
-    public void createFromJSON(JSONObject object){
-
-
-
+    public void fillSceneFromJSON(JSONObject object){
 
     }
 

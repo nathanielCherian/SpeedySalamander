@@ -46,6 +46,8 @@ public class Board extends JPanel {
 
 
 
+
+        //Needed after panel switch
         this.addComponentListener( new ComponentAdapter() {
             @Override
             public void componentShown( ComponentEvent e ) {
@@ -84,25 +86,6 @@ public class Board extends JPanel {
     }
 
 
-    void updatePlayers(){
-        /*
-        JSONObject server_data = client.makeRequest(player.getJSON());
-        System.out.println(server_data.keySet());
-        for(Object player_id_ : server_data.keySet()){
-            int ep_id;
-            if((ep_id = Integer.parseInt((String) player_id_)) != PLAYER_ID){
-
-                if(externalPlayers.containsKey(ep_id)){
-                    externalPlayers.get(ep_id).setFromJSON((JSONObject) server_data.get(player_id_));
-                }else{
-                    ExternalPlayer ep = new ExternalPlayer(ep_id);
-                    ep.setFromJSON((JSONObject) server_data.get(player_id_));
-                    externalPlayers.put(ep_id, ep);
-                }
-            }
-        }
-    */
-    }
 
 
     protected Timer timer = new Timer(TICK_SPEED, new ActionListener() {
@@ -128,13 +111,11 @@ public class Board extends JPanel {
 
         scene.paint(g2d);
 
+
         if(MULTIPLAYER_ENABLED){
             client.send(scene.player.toJSON().toJSONString());
         }
 
-
-
-        //createBorder(g2d);
     }
 
 

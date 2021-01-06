@@ -1,8 +1,5 @@
 package Game;
 
-import Game.Sounds.Sound;
-import com.amazonaws.services.dynamodbv2.xspec.S;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -39,10 +36,28 @@ public class Home extends JFrame {
 
         //add(new Board());
 
-
         add(panelCont);
         pack();
     }
 
+
+
+    //Testing
+
+    private static class BoardEntryPoint {
+
+        public static void main(String[] args){
+            try{
+                JFrame frame = new JFrame();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setPreferredSize(new Dimension(Game.WIDTH+18,Game.HEIGHT+42));
+                frame.add(new Board());
+                frame.pack();
+                frame.setVisible(true);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+    }
 
 }
