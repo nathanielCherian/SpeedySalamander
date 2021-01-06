@@ -10,14 +10,11 @@ import Game.Objects.SmallRocks;
 import Game.Objects.ThornBush;
 import Game.Objects.Tree;
 
+import java.awt.event.*;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class Board extends JPanel {
 
@@ -26,7 +23,7 @@ public class Board extends JPanel {
     public int TICK_SPEED = 50;
     Player player = new Player(PLAYER_ID);
 
-    public boolean MULTIPLAYER_ENABLED = true;
+    public boolean MULTIPLAYER_ENABLED = false;
     Client client;
 
     Scene scene = new Scene();
@@ -46,6 +43,16 @@ public class Board extends JPanel {
 
         addKeyListener(new GameKeyListener());
         setFocusable(true);
+
+
+
+        this.addComponentListener( new ComponentAdapter() {
+            @Override
+            public void componentShown( ComponentEvent e ) {
+                Board.this.requestFocusInWindow();
+            }
+        });
+
     }
 
 
