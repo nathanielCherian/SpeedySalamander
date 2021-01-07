@@ -1,3 +1,5 @@
+//not fully my code, had to look up some parts of it.
+
 package Playgrounds;
 
 import javax.swing.*;
@@ -7,7 +9,7 @@ import java.awt.event.*;
 public class PinballPanel extends JPanel {
     Timer t = new Timer(1, new Listener());
     int ctr = 0;
-    double G = 0.01; //Gravitational Constant
+    double G = 0.001; //Grav
 
     final int xpos = 280;
 
@@ -136,25 +138,17 @@ public class PinballPanel extends JPanel {
             double bmag = Math.sqrt(v2d[0] * v2d[0] + v2d[1] * v2d[1]);
             double lineslope = ((double)(x2 - x1))/((double)(y2 - y1));
             double ballslope = v2d[0] / v2d[1];
-            //System.out.println(ballslope + " " + lineslope);
-            //xpos * ballslope + p2d[1] = xpos * lineslope + y1;
+
             double binter = p2d[0] - ballslope * p2d[1];
             double linter = x1 - lineslope * y1;
 
             double y = (binter - linter)/(lineslope - ballslope);
             double sx = y * ballslope + binter;
-            //double qx = y * lineslope + linter;
             double la = Math.atan2(y2 - y1, x2 - x1);
             double ba = Math.atan2(v2d[1], v2d[0]);
 
             double da = 2 * la -  ba;
 
-            //System.out.println(sx + " " + y);
-			/*
-			g.drawLine((int)sx, (int)y, (int)p2d[0], (int)p2d[1]); 
-			g.fillRect((int)sx - 2, (int)y - 2, 4, 4);
-			g.drawLine((int)p2d[0], (int)p2d[1], (int) (p2d[0] + Math.cos(da) * 100), (int)(p2d[1] + Math.sin(da) * 100)); 
-			//*/
             if(sx >= Math.min(x2, x1) && sx <= Math.max(x1, x2) &&
                     Math.min(y1, y2) <= y && Math.max(y1, y2) >= y){
                 double interdist = Math.sqrt(Math.pow(sx - p2d[0],2) + Math.pow(y - p2d[1],2));
@@ -162,10 +156,8 @@ public class PinballPanel extends JPanel {
                 double futuredist = Math.sqrt(Math.pow(sx - (p2d[0] + Math.cos(ba) * tiny),2) + Math.pow(y - (p2d[1] + Math.sin(ba) * tiny),2));
 
                 if(interdist <=  bmag + r && futuredist < interdist){
-                    //System.out.println("Carl Sagan" + i); //this is a pun because he wrote a book called Contact
                     if(i > preset.length){
                         int ball = (int) Math.floor((i - preset.length)/sides);
-                        //System.out.println(balls[ball][2]);
                         points += balls[ball][3] * bmag;
                     }
                     v2d[0] = Math.cos(da) * bmag;
@@ -174,10 +166,6 @@ public class PinballPanel extends JPanel {
             }
         }
         g.setColor(Color.black);
-        //System.out.println(sx + " " + qx);
-        //System.out.println(ballslope + " " + lineslope);
-        //double slope = Math.atan2(v2d[1], v2d[0]);
-        //g.drawLine((int) p2d[0], (int) p2d[1], (int) (p2d[0]+10*v2d[0]), (int) (p2d[1]+10*v2d[1]));
 
         g.fillRect(xpos - 5, (int)sd + 10, 10, 20);
 
