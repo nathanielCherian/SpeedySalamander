@@ -1,5 +1,6 @@
 package Game;
 
+import Game.Multiplayer.Client;
 import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
@@ -32,17 +33,20 @@ public abstract class Paintable {
         this.y = y;
     }
 
+    //Painters
     public void paint(Graphics2D g2d){}
-
     public void paintBox(Graphics2D g2d){
         g2d.draw(getBoundingBox());
     }
 
+    //Shape
     public Rectangle getBoundingBox(){
         return new Rectangle(x, y, width, height);
     }
 
 
+
+    //File Loaders
     public String basepath = new File("").getAbsolutePath();
     public BufferedImage loadImage(String filePath){
         BufferedImage img = null;
@@ -54,6 +58,8 @@ public abstract class Paintable {
         return img;
     }
 
+
+    //JSON's
     public JSONObject toJSON(){
         JSONObject object = new JSONObject();
         object.put("G_ID", ID); //game id
@@ -65,6 +71,28 @@ public abstract class Paintable {
 
     public static Paintable createFromJSON(JSONObject object){
         return null;
+    }
+
+
+    //Linking Client object to all inherited objects
+    private Client client;
+    private Client.ClientUpdateListener clientUpdateListener;
+    public void setClient(Client client) {
+        this.client = client;
+        this.clientUpdateListener = client.clientUpdateListener; //linking listener
+    }
+
+    public void onCreate(){
+        clientUpdateListener.onCreate(this);
+    }
+
+    public void onDelete(){
+        toDelete = true;
+        clientUpdateListener.onDelete(this);
+    }
+
+    public void onChange(){
+        clientUpdateListener.onChange(this);
     }
 
 

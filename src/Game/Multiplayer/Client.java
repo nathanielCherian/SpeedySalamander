@@ -1,7 +1,11 @@
 package Game.Multiplayer;
 
+import Game.Listeners.UpdateListener;
+import Game.Paintable;
 import com.amazonaws.services.dynamodbv2.xspec.S;
+import org.json.simple.JSONObject;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +22,17 @@ public class Client {
 
     public boolean open = true;
 
-    public Client(String ip, int port, ClientListener listener){
+    public ClientUpdateListener clientUpdateListener;
+    public Client(){
+        clientUpdateListener = new EmptyClientUpdateListener(); //Start with empty so no messages are sent
+
+    }
+
+
+
+    public void startClient(String ip, int port, ClientListener listener){
+
+        clientUpdateListener = new ClientUpdateListener(); //Switch Client listener
 
         clientListener = listener;
         try{
@@ -124,6 +138,56 @@ public class Client {
 
     public boolean isConnected(){
         return open;
+    }
+
+
+    //This class will send messages
+    public class ClientUpdateListener implements UpdateListener {
+        @Override
+        public void onCreate(Paintable p) {
+            //System.out.println("created! " + p);
+            sendJSONString(p, "CREATE");
+        }
+
+        @Override
+        public void onChange(Paintable p) {
+            //System.out.println("changed! " + p);
+            sendJSONString(p, "CHANGE");
+        }
+
+        @Override
+        public void onDelete(Paintable p) {
+            //System.out.println("deleted! " + p);
+            sendJSONString(p, "DELETE");
+        }
+
+
+        public void sendJSONString(Paintable p, String code){
+            JSONObject object = new JSONObject();
+            object.put("stateCode", code);
+            object.put("object", p.toJSON());
+            send(object.toJSONString());
+        }
+
+    }
+
+
+    //Goes to nowhere
+    public class EmptyClientUpdateListener extends ClientUpdateListener {
+        @Override
+        public void onCreate(Paintable p) {
+            //System.out.println("created!");
+        }
+
+        @Override
+        public void onChange(Paintable p) {
+            //System.out.println("changed!");
+        }
+
+        @Override
+        public void onDelete(Paintable p) {
+            //System.out.println("deleted!");
+        }
     }
 
 }

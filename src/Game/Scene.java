@@ -3,6 +3,7 @@ package Game;
 import Game.Entities.Player;
 import Game.GUI.BasicElement;
 import Game.Listeners.CoinCollectListener;
+import Game.Multiplayer.Client;
 import Game.Objects.Coin;
 import Game.Sounds.Sound;
 import com.amazonaws.services.dynamodbv2.xspec.S;
@@ -38,12 +39,16 @@ public class Scene{
 
 
     public void add(Paintable o){
+        o.setClient(client);
         children.add(o);
     } //adding children directly
-    //adding children while still in game loop, avoid concurrent modification error
-    public void addToWaitingList(Paintable o){ childrenQueue.add(o); }
+    public void addToWaitingList(Paintable o){
+        o.setClient(client);
+        childrenQueue.add(o); } //adding children while still in game loop, avoid concurrent modification error
 
+    //Specific elements
     public void addPlayer(Player p){
+        p.setClient(client);
         player = p;
     }
     public void addBackground(Paintable o){
@@ -54,6 +59,7 @@ public class Scene{
     }
 
 
+    //Paint
     public void paint(Graphics2D g2d){
 
         //All paintables must be drawn in this order
@@ -83,6 +89,7 @@ public class Scene{
 
     }
 
+
     //Periodically call to update scene
     public void purgeChildren(){
         children.removeIf(child -> child.toDelete);
@@ -91,6 +98,17 @@ public class Scene{
         children.addAll(childrenQueue);
         childrenQueue.clear();
     }
+
+
+
+    //Multiplayer section
+    private Client client;
+    private Client.ClientUpdateListener clientUpdateListener;
+    public void setClient(Client client) {
+        this.client = client;
+        this.clientUpdateListener = client.clientUpdateListener; //linking listener
+    }
+
 
 
     public void fillSceneFromJSON(JSONObject object){
@@ -118,6 +136,8 @@ public class Scene{
 
 
 
+
+
     Random rand = new Random();
     //Listeners
     private class CoinCollected implements CoinCollectListener {
@@ -126,7 +146,10 @@ public class Scene{
             //Adding a coin
 
             Sound.setPlaySound("\\src\\Game\\Resources\\Sounds\\Coin\\coin.wav");
-            addToWaitingList(new Coin(rand.nextInt(300), rand.nextInt(300)));
+            Coin c = new Coin(rand.nextInt(300), rand.nextInt(300));
+            addToWaitingList(c);
+
+            c.onCreate();
         }
     }
 

@@ -115,7 +115,9 @@ public class Player extends Paintable{
                 }
                 speed *= -1;
             }else if(obj2.isCollectable){
-                obj2.toDelete = true;
+
+                obj2.onDelete(); //Delete object
+                //obj2.toDelete = true;
 
                 if(obj2.ID == Game.COIN){
                     executeCoinCollectListener((Coin) obj2);
@@ -158,13 +160,6 @@ public class Player extends Paintable{
         avatarAnimationState += 1;
         avatarAnimationState %= 8;
 
-
-        /*
-        Ellipse2D shape = new Ellipse2D.Double(x,y,r,r);
-        g2d.setColor(Color.red);
-        g2d.fill(shape);
-        */
-
     }
 
 
@@ -196,6 +191,7 @@ public class Player extends Paintable{
         }
 
 
+        onChange(); //If user has pressed key relay message
     }
 
     public void checkCollisions(ArrayList<Paintable> objects){

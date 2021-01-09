@@ -23,8 +23,8 @@ public class Board extends JPanel {
     public int TICK_SPEED = 50;
     Player player = new Player(PLAYER_ID);
 
-    public boolean MULTIPLAYER_ENABLED = false;
-    Client client;
+    public boolean MULTIPLAYER_ENABLED = true;
+    Client client = new Client(); // Daemon Thread not started yet
 
     Scene scene = new Scene();
 
@@ -32,14 +32,17 @@ public class Board extends JPanel {
 
     public Board(){
 
-        timer.start();
 
         if(MULTIPLAYER_ENABLED){
-            client = new Client("127.0.0.1", 8888, new TempClientListener());
+            client.startClient("127.0.0.1", 8888, new TempClientListener());
         }
 
-
+        scene.setClient(client);
         packScene();
+
+
+        timer.start();
+
 
         addKeyListener(new GameKeyListener());
         setFocusable(true);
@@ -112,9 +115,6 @@ public class Board extends JPanel {
         scene.paint(g2d);
 
 
-        if(MULTIPLAYER_ENABLED){
-            client.send(scene.player.toJSON().toJSONString());
-        }
 
     }
 
