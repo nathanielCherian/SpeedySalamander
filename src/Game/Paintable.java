@@ -92,8 +92,8 @@ public abstract class Paintable {
     public void setFromJSON(JSONObject object){
         this.ID = (String) object.get("G_ID");
         this.MULTIPLAYER_ID = (String) object.get("M_ID");
-        this.x = (int) object.get("xPos");
-        this.y = (int) object.get("yPos");
+        this.x = ((Long)object.get("xPos")).intValue();
+        this.y = ((Long)object.get("yPos")).intValue();
     }
 
     public static Paintable createFromJSON(JSONObject object){

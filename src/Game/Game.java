@@ -5,6 +5,7 @@ package Game;
 
 import Game.Objects.Coin;
 import Game.Objects.SmallRocks;
+import Game.Objects.ThornBush;
 import Game.Objects.Tree;
 import com.amazonaws.services.dynamodbv2.xspec.B;
 import netscape.javascript.JSObject;
@@ -27,33 +28,25 @@ public class Game {
     public static final String COIN = "COIN";
 
 
-    public static final Object getObject(JSONObject object){
+    public static final Paintable getObject(JSONObject object){
 
-        /*
-        String id = (String) object.get("ID");
-        if (id == BACKGROUND){
-            return new Background();
-        }
-
-        int x = (int) object.get("xPos");
-        int y = (int) object.get("yPos");
-
+        String id = (String) object.get("G_ID");
         switch (id){
+            case BACKGROUND:
+                return new Background();
             case TREE:
-                return new Tree(x,y);
+                return new Tree(object);
             case SMALL_ROCKS:
-                return new SmallRocks(x,y);
+                return new SmallRocks(object);
             case THORN_BUSH:
-                return new SmallRocks(x,y);
+                return new ThornBush(object);
             case COIN:
-                return new Coin(x,y);
+                return new Coin(object);
             default:
                 break;
         }
 
-       */
-
-        return new Object();
+        return null;
     }
 
 }

@@ -148,6 +148,7 @@ public class Scene{
     public class InitialSceneListener{
         public void receivedInput(String msg) {
             System.out.println(msg);
+            fillSceneFromJSONString(msg);
         }
     }
 
@@ -160,6 +161,11 @@ public class Scene{
             String background = (String) object.get("background");
             JSONArray children = (JSONArray) object.get("children");
 
+            children.forEach(child -> {
+                Paintable p = Game.getObject((JSONObject) child);
+                System.out.println(p);
+                add(p);
+            });
 
         } catch (ParseException e) {
             e.printStackTrace();

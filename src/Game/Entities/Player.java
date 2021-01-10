@@ -258,10 +258,10 @@ public class Player extends Paintable{
     public void setFromJSON(JSONObject object){
         this.ID = (String) object.get("G_ID");
         this.MULTIPLAYER_ID = (String) object.get("M_ID");
-        this.x = (int) object.get("xPos");
-        this.y = (int) object.get("yPos");
-        this.avatarMotionState = (int) object.get("avatarMotionState");
-        this.avatarFacing = (int) object.get("avatarFacing");
+        this.x = ((Long)object.get("xPos")).intValue();
+        this.y = ((Long)object.get("yPos")).intValue();
+        this.avatarMotionState = ((Long)object.get("avatarMotionState")).intValue();
+        this.avatarFacing = ((Long)object.get("avatarFacing")).intValue();
     }
 
 }

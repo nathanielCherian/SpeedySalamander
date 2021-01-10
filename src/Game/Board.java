@@ -32,14 +32,13 @@ public class Board extends JPanel {
 
     public Board(){
 
-
+        scene.setClient(client);
         if(MULTIPLAYER_ENABLED){
             client.setPLAYER_ID(PLAYER_ID);
             client.setInitialSceneListener(scene.initialSceneListener);
             client.startClient("127.0.0.1", 8888, new TempClientListener());
         }
 
-        scene.setClient(client);
         packScene();
 
 
@@ -69,12 +68,17 @@ public class Board extends JPanel {
         scene.addBackground(new Background());
         scene.addPlayer(player);
 
-        //Add objects
-        scene.add(new Tree(100,100));
-        scene.add(new Tree(140,100));
-        scene.add(new SmallRocks(250,200));
-        scene.add(new ThornBush(50,50));
-        scene.add(new Coin(300,300));
+        if(!MULTIPLAYER_ENABLED){ //THIS IS TEMP
+            //Add objects
+            scene.add(new Tree(100,100));
+            scene.add(new Tree(140,100));
+            scene.add(new SmallRocks(250,200));
+            scene.add(new ThornBush(50,50));
+            scene.add(new Coin(300,300));
+
+        }
+
+
 
         //Add GUI Elements
         Border b = new Border();
@@ -82,7 +86,6 @@ public class Board extends JPanel {
         HealthBar hb = new HealthBar(25, 75);
         scene.addGUIElement(hb);
 
-        System.out.println(scene.toJSON());
 
         //register listeners for scene
         player.addCoinCollectListener(scene.coinCollected);
