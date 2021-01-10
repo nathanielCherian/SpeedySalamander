@@ -172,11 +172,14 @@ public class Player extends Paintable{
 
     );
 
+    Boolean toggle = true;
     Set<Integer> pressed_keys;
     public void digest_keys(Set<Integer> pressed_keys){
         this.pressed_keys = pressed_keys;
         if(pressed_keys.size() == 0){
             avatarMotionState = 0;
+            if(toggle)onChange();
+            toggle=false;
             return;
         }else if(pressed_keys.contains(16)){ //SPRINT
             speed = 10;
@@ -191,6 +194,7 @@ public class Player extends Paintable{
         }
 
 
+        toggle=true;
         onChange(); //If user has pressed key relay message
     }
 
@@ -242,12 +246,22 @@ public class Player extends Paintable{
         JSONObject object = new JSONObject();
         object.put("playerID", playerID);
         object.put("ID", ID);
+        object.put("M_ID", MULTIPLAYER_ID);
         object.put("xPos", x);
         object.put("yPos", y);
         object.put("avatarMotionState", avatarMotionState);
         object.put("avatarFacing", avatarFacing);
 
         return object;
+    }
+
+    public void setFromJSON(JSONObject object){
+        this.ID = (String) object.get("G_ID");
+        this.MULTIPLAYER_ID = (String) object.get("M_ID");
+        this.x = (int) object.get("xPos");
+        this.y = (int) object.get("yPos");
+        this.avatarMotionState = (int) object.get("avatarMotionState");
+        this.avatarFacing = (int) object.get("avatarFacing");
     }
 
 }

@@ -14,8 +14,11 @@ public class ServerMain {
     private static ServerSocket ss;
     private static ArrayList<Socket> clients = new ArrayList<>();
 
+    private static ServerScene serverScene;
+
     public static void main(String args[]) throws IOException {
 
+        serverScene = new ServerScene();
 
         ss = new ServerSocket(port);
         //Check if port is free later
@@ -74,6 +77,8 @@ public class ServerMain {
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
                 PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+
+                out.println(serverScene.getSceneAsJSON());
 
                 while (open){
                     System.out.println("RECIEVED: " + in.readLine());

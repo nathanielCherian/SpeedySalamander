@@ -4,11 +4,14 @@ import Game.Entities.Player;
 import Game.GUI.BasicElement;
 import Game.Listeners.CoinCollectListener;
 import Game.Multiplayer.Client;
+import Game.Multiplayer.ClientListener;
 import Game.Objects.Coin;
 import Game.Sounds.Sound;
 import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -111,9 +114,7 @@ public class Scene{
 
 
 
-    public void fillSceneFromJSON(JSONObject object){
 
-    }
 
     public JSONObject toJSON(){
 
@@ -133,13 +134,43 @@ public class Scene{
     }
 
 
+    public Paintable getChildByMID(String MID){
+
+        for(Paintable child: children){
+            if(child.MULTIPLAYER_ID == MID){
+                return child;
+            }
+        }
+        return null;
+    }
+
+    public InitialSceneListener initialSceneListener = new InitialSceneListener();
+    public class InitialSceneListener{
+        public void receivedInput(String msg) {
+            System.out.println(msg);
+        }
+    }
+
+    public void fillSceneFromJSONString(String msg){
+        JSONObject object;
+        try{
+            JSONParser parser = new JSONParser();
+            object = (JSONObject) parser.parse(msg);
+
+            String background = (String) object.get("background");
+            JSONArray children = (JSONArray) object.get("children");
 
 
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
+    }
 
-    Random rand = new Random();
+
     //Listeners
+    Random rand = new Random();
     private class CoinCollected implements CoinCollectListener {
         @Override
         public void onCollectCoin(Coin coin) {

@@ -2,6 +2,7 @@ package Game.Multiplayer;
 
 import Game.Listeners.UpdateListener;
 import Game.Paintable;
+import Game.Scene;
 import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.json.simple.JSONObject;
 
@@ -28,7 +29,15 @@ public class Client {
 
     }
 
+    private Scene.InitialSceneListener initialSceneListener;
+    public void setInitialSceneListener(Scene.InitialSceneListener initialSceneListener) {
+        this.initialSceneListener = initialSceneListener;
+    }
 
+    private int PLAYER_ID;
+    public void setPLAYER_ID(int PLAYER_ID) {
+        this.PLAYER_ID = PLAYER_ID;
+    }
 
     public void startClient(String ip, int port, ClientListener listener){
 
@@ -41,6 +50,10 @@ public class Client {
 
             in=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out=new PrintWriter(socket.getOutputStream(), true);
+
+            String initialScene = in.readLine();
+            if(initialScene==null)return;
+            initialSceneListener.receivedInput(initialScene);
 
             Thread clientThread = new Thread(new ClientRunnable());
             clientThread.setName("GAME: client listener");
@@ -92,7 +105,7 @@ public class Client {
                         }
                     }
 
-                    clientListener.recivedInput(msg);
+                    clientListener.receivedInput(msg);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -164,6 +177,7 @@ public class Client {
 
         public void sendJSONString(Paintable p, String code){
             JSONObject object = new JSONObject();
+            object.put("playerID", PLAYER_ID);
             object.put("stateCode", code);
             object.put("object", p.toJSON());
             send(object.toJSONString());

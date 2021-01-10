@@ -34,6 +34,8 @@ public class Board extends JPanel {
 
 
         if(MULTIPLAYER_ENABLED){
+            client.setPLAYER_ID(PLAYER_ID);
+            client.setInitialSceneListener(scene.initialSceneListener);
             client.startClient("127.0.0.1", 8888, new TempClientListener());
         }
 
@@ -76,7 +78,7 @@ public class Board extends JPanel {
 
         //Add GUI Elements
         Border b = new Border();
-        scene.add(b);
+        scene.addGUIElement(b);
         HealthBar hb = new HealthBar(25, 75);
         scene.addGUIElement(hb);
 

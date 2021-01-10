@@ -12,7 +12,7 @@ public class TempClientListener implements ClientListener{
     }
 
     @Override
-    public void recivedInput(String msg) {
+    public void receivedInput(String msg) {
         System.out.println("recivedInput: " + msg);
     }
 
