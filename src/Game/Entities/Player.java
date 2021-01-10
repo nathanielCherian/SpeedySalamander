@@ -45,6 +45,10 @@ public class Player extends Paintable{
 
     }
 
+    public Player(JSONObject object){ //not to be used
+        setFromJSON(object);
+    }
+
 
     void createAvatarImage(){
         // Creating images
@@ -245,7 +249,7 @@ public class Player extends Paintable{
 
         JSONObject object = new JSONObject();
         object.put("playerID", playerID);
-        object.put("ID", ID);
+        object.put("G_ID", "EPLAYER");//This must be eplayer as it is sent to server
         object.put("M_ID", MULTIPLAYER_ID);
         object.put("xPos", x);
         object.put("yPos", y);
@@ -256,6 +260,7 @@ public class Player extends Paintable{
     }
 
     public void setFromJSON(JSONObject object){
+        this.playerID = ((Long)object.get("playerID")).intValue();
         this.ID = (String) object.get("G_ID");
         this.MULTIPLAYER_ID = (String) object.get("M_ID");
         this.x = ((Long)object.get("xPos")).intValue();

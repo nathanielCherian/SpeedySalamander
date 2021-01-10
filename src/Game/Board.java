@@ -67,6 +67,7 @@ public class Board extends JPanel {
         //add Background
         scene.addBackground(new Background());
         scene.addPlayer(player);
+        player.onCreate();
 
         if(!MULTIPLAYER_ENABLED){ //THIS IS TEMP
             //Add objects
@@ -75,7 +76,7 @@ public class Board extends JPanel {
             scene.add(new SmallRocks(250,200));
             scene.add(new ThornBush(50,50));
             scene.add(new Coin(300,300));
-
+            //System.out.println(scene.toJSON());
         }
 
 

@@ -7,7 +7,6 @@ import Game.Multiplayer.Client;
 import Game.Multiplayer.ClientListener;
 import Game.Objects.Coin;
 import Game.Sounds.Sound;
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -15,6 +14,7 @@ import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Scene{
@@ -116,6 +116,7 @@ public class Scene{
 
 
 
+    //began to shift children to hashmap
     public JSONObject toJSON(){
 
         JSONObject scene = new JSONObject();
@@ -123,12 +124,19 @@ public class Scene{
         scene.put("background", background.ID);
         scene.put("mainPlayer", player.toJSON());
 
+        JSONObject childrenObject = new JSONObject();
+        for(Paintable child: children){
+            childrenObject.put(child.MULTIPLAYER_ID, child.toJSON());
+        }
+
+        /*
         JSONArray childrenArray = new JSONArray();
         for(Paintable child: children){
             childrenArray.add(child.toJSON());
         }
+        */
 
-        scene.put("children", childrenArray);
+        scene.put("children", childrenObject);
 
         return scene;
     }
@@ -159,11 +167,12 @@ public class Scene{
             object = (JSONObject) parser.parse(msg);
 
             String background = (String) object.get("background");
-            JSONArray children = (JSONArray) object.get("children");
 
-            children.forEach(child -> {
+
+            JSONObject children = (JSONObject) object.get("children");
+            children.forEach((MID, child) -> {
                 Paintable p = Game.getObject((JSONObject) child);
-                System.out.println(p);
+                //System.out.println(p);
                 add(p);
             });
 

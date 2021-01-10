@@ -1,5 +1,9 @@
 package Game.Multiplayer;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -79,12 +83,18 @@ public class ServerMain {
                 PrintWriter out = new PrintWriter(s.getOutputStream(), true);
 
                 out.println(serverScene.getSceneAsJSON());
+                JSONParser parser = new JSONParser();
 
                 while (open){
-                    System.out.println("RECIEVED: " + in.readLine());
+                    String msg;
+                    if((msg = in.readLine()) == null)break;
+                    JSONObject object = (JSONObject) parser.parse(msg);
+                    System.out.println("RECIEVED: " + msg);
+                    serverScene.updateFromJSON(object);
+                    System.out.println(serverScene.getSceneAsJSON());
                 }
 
-            } catch (IOException e) {
+            } catch (IOException | ParseException e) {
                 e.printStackTrace();
 
             }finally {
