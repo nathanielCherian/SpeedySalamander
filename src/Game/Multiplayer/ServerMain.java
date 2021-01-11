@@ -37,6 +37,8 @@ public class ServerMain {
     }
 
 
+    public static ArrayList<ClientThreadRunnable> clientThreadRunnables = new ArrayList<>();
+
     static class ServerRunnable implements Runnable{
 
         @Override
@@ -50,7 +52,9 @@ public class ServerMain {
 
                     Socket s = ss.accept();
 
-                    Thread clientThread = new Thread(new ClientThreadRunnable(s));
+                    ClientThreadRunnable clientThreadRunnable = new ClientThreadRunnable(s);
+                    clientThreadRunnables.add(clientThreadRunnable);
+                    Thread clientThread = new Thread(clientThreadRunnable);
                     clientThread.setDaemon(true);
                     clientThread.setName("Client " + s.getInetAddress().toString());
                     clientThread.start();
@@ -73,14 +77,17 @@ public class ServerMain {
             this.s = s;
         }
 
+        public BufferedReader in;
+        public PrintWriter out;
+
         @Override
         public void run() {
             System.out.println("client connected!");
             clients.add(s);
 
             try {
-                BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                out = new PrintWriter(s.getOutputStream(), true);
 
                 out.println(serverScene.getSceneAsJSON());
                 JSONParser parser = new JSONParser();
@@ -91,7 +98,14 @@ public class ServerMain {
                     JSONObject object = (JSONObject) parser.parse(msg);
                     System.out.println("RECIEVED: " + msg);
                     serverScene.updateFromJSON(object);
-                    System.out.println(serverScene.getSceneAsJSON());
+                    //System.out.println(serverScene.getSceneAsJSON());
+
+                    clientThreadRunnables.forEach(client->{
+                        if(client != this){
+                            client.out.println(msg);
+                        }
+                    });
+
                 }
 
             } catch (IOException | ParseException e) {
@@ -99,6 +113,7 @@ public class ServerMain {
 
             }finally {
                 clients.remove(s);
+                clientThreadRunnables.remove(this);
                 try {
                     s.close();
                 } catch (IOException e) {

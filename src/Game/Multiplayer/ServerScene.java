@@ -7,7 +7,7 @@ import org.json.simple.parser.ParseException;
 
 public class ServerScene {
 
-    String SCENE_JSON = "{\"children\":{\"9zzh68e\":{\"avatarFacing\":4,\"yPos\":70,\"M_ID\":\"9zzh68e\",\"G_ID\":\"EPLAYER\",\"xPos\":140,\"playerID\":1,\"avatarMotionState\":1}, \"zyn4vnx\":{\"G_ID\":\"COIN\",\"yPos\":300,\"M_ID\":\"zyn4vnx\",\"xPos\":300},\"kiqxydk\":{\"G_ID\":\"SMALLROCKS\",\"yPos\":200,\"M_ID\":\"kiqxydk\",\"xPos\":250},\"uemj1pc\":{\"G_ID\":\"THORNBUSH\",\"yPos\":50,\"M_ID\":\"uemj1pc\",\"xPos\":50},\"njg0808\":{\"G_ID\":\"TREE\",\"yPos\":100,\"M_ID\":\"njg0808\",\"xPos\":100},\"x96c6w9\":{\"G_ID\":\"TREE\",\"yPos\":100,\"M_ID\":\"x96c6w9\",\"xPos\":140}},\"background\":\"BACKGROUND\"}\n";
+    String SCENE_JSON = "{\"children\":{\"zyn4vnx\":{\"G_ID\":\"COIN\",\"yPos\":300,\"M_ID\":\"zyn4vnx\",\"xPos\":300},\"kiqxydk\":{\"G_ID\":\"SMALLROCKS\",\"yPos\":200,\"M_ID\":\"kiqxydk\",\"xPos\":250},\"uemj1pc\":{\"G_ID\":\"THORNBUSH\",\"yPos\":50,\"M_ID\":\"uemj1pc\",\"xPos\":50},\"njg0808\":{\"G_ID\":\"TREE\",\"yPos\":100,\"M_ID\":\"njg0808\",\"xPos\":100},\"x96c6w9\":{\"G_ID\":\"TREE\",\"yPos\":100,\"M_ID\":\"x96c6w9\",\"xPos\":140}},\"background\":\"BACKGROUND\"}\n";
     //String SCENE_JSON = "{\"children\":[{\"G_ID\":\"TREE\",\"yPos\":150,\"M_ID\":\"jm0b4vz\",\"xPos\":100},{\"G_ID\":\"TREE\",\"yPos\":300,\"M_ID\":\"c2cl8vp\",\"xPos\":300},{\"G_ID\":\"SMALLROCKS\",\"yPos\":400,\"M_ID\":\"15qwxr5\",\"xPos\":400},{\"G_ID\":\"THORNBUSH\",\"yPos\":50,\"M_ID\":\"1996bl0\",\"xPos\":50},{\"G_ID\":\"COIN\",\"yPos\":150,\"M_ID\":\"jo6rald\",\"xPos\":300}],\"background\":\"BACKGROUND\"}\n";
 
     private JSONObject sceneObject;

@@ -144,11 +144,13 @@ public class Scene{
 
     public Paintable getChildByMID(String MID){
 
+
         for(Paintable child: children){
-            if(child.MULTIPLAYER_ID == MID){
+            if(child.MULTIPLAYER_ID.equals(MID)){
                 return child;
             }
         }
+
         return null;
     }
 
@@ -172,7 +174,6 @@ public class Scene{
             JSONObject children = (JSONObject) object.get("children");
             children.forEach((MID, child) -> {
                 Paintable p = Game.getObject((JSONObject) child);
-                //System.out.println(p);
                 add(p);
             });
 
@@ -180,8 +181,50 @@ public class Scene{
             e.printStackTrace();
         }
 
-
     }
+
+    public MessageListener messageListener = new MessageListener();
+    public class MessageListener{
+        public void receivedJSONInput(JSONObject object) {
+            updateSceneFromJSON(object);
+        }
+    }
+
+    public void updateSceneFromJSON(JSONObject object){
+        System.out.println("object: "+object);
+
+        String code = (String) object.get("stateCode");
+        JSONObject paintableJSON = (JSONObject) object.get("object");
+        String MID = (String) paintableJSON.get("M_ID");
+
+        switch (code){
+            case "CREATE":
+                {
+                    Paintable p = Game.getObject(paintableJSON);
+                    add(p);
+                }
+                break;
+
+            case "CHANGE":
+                {
+                    Paintable p = getChildByMID(MID);
+                    if(p==null)break;
+                    p.setFromJSON(paintableJSON);
+                }
+                break;
+            case "DELETE":
+                {
+                    Paintable p = getChildByMID(MID);
+                    if(p==null)break;
+                    p.toDelete = true;
+                }
+                break;
+            default:
+                break;
+
+        }
+    }
+
 
 
     //Listeners

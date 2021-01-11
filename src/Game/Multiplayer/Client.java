@@ -5,6 +5,8 @@ import Game.Paintable;
 import Game.Scene;
 import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -55,6 +57,7 @@ public class Client {
             if(initialScene==null)return;
             initialSceneListener.receivedInput(initialScene);
 
+
             Thread clientThread = new Thread(new ClientRunnable());
             clientThread.setName("GAME: client listener");
             clientThread.setDaemon(true); //Saving cpu power for game
@@ -86,6 +89,7 @@ public class Client {
         @Override
         public void run() {
 
+            JSONParser parser = new JSONParser();
             while (open){
 
                 try{
@@ -105,6 +109,8 @@ public class Client {
                         }
                     }
 
+                    JSONObject object = (JSONObject) parser.parse(msg);
+                    clientListener.receivedJSONInput(object);
                     clientListener.receivedInput(msg);
 
                 } catch (IOException e) {
@@ -121,6 +127,8 @@ public class Client {
                         ioException.printStackTrace();
                     }
 
+                }catch (ParseException e){
+                    e.printStackTrace();
                 }
 
 

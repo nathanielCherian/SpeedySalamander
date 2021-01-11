@@ -39,7 +39,7 @@ public class HealthBar extends BasicElement{
     private class BarDamageTakenListener implements DamageTakenListener {
         @Override
         public void onDamageTaken(int damageTaken) {
-            System.out.println("DAMAGE TAKEN");
+            //System.out.println("DAMAGE TAKEN");
         }
     }
 

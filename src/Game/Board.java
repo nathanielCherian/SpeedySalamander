@@ -4,7 +4,7 @@ import Game.Entities.Player;
 import Game.GUI.Border;
 import Game.GUI.HealthBar;
 import Game.Multiplayer.Client;
-import Game.Multiplayer.TempClientListener;
+import Game.Multiplayer.ClientEventManager;
 import Game.Objects.Coin;
 import Game.Objects.SmallRocks;
 import Game.Objects.ThornBush;
@@ -36,7 +36,10 @@ public class Board extends JPanel {
         if(MULTIPLAYER_ENABLED){
             client.setPLAYER_ID(PLAYER_ID);
             client.setInitialSceneListener(scene.initialSceneListener);
-            client.startClient("127.0.0.1", 8888, new TempClientListener());
+
+            ClientEventManager clientEventManager = new ClientEventManager();
+            clientEventManager.setMessageListener(scene.messageListener);
+            client.startClient("76.176.58.233", 8888, clientEventManager);
         }
 
         packScene();
