@@ -9,5 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.amazonaws:aws-java-sdk-dynamodb:1.11.911" level="project" />
     <orderEntry type="library" name="com.googlecode.json-simple:json-simple:1.1.1" level="project" />
+    <orderEntry type="library" name="com.massisframework.j3d:vecmath:1.6.0.1" level="project" />
+    <orderEntry type="library" name="com.massisframework.j3d:java3d-core:1.6.0.1" level="project" />
   </component>
 </module>
