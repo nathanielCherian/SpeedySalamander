@@ -16,6 +16,8 @@ The project also requires Java 15
 
 To start the game run ```Home.Main``` located within the ```Game``` package.
 
+*Note at this stage of development, the server is hardcoded into the system, this can cause connection issues as the public game server is not alive 24/7. To play singleplayer change [this ip](https://github.com/nathanielCherian/SpeedySalamanders/blob/master/src/Game/Board.java#L26) variable to false before runtime. To run a development server yourself run [this](https://github.com/nathanielCherian/SpeedySalamanders/blob/master/src/Game/Multiplayer/ServerMain.java#L23) static method then change [this](https://github.com/nathanielCherian/SpeedySalamanders/blob/master/src/Game/Board.java#L42) to `127.0.0.1`*
+
 
 ## About
 Our project will have 2D/3D games using databases. 
