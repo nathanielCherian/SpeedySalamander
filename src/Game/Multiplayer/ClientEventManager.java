@@ -1,6 +1,9 @@
 package Game.Multiplayer;
 
-public class TempClientListener implements ClientListener{
+import Game.Scene;
+import org.json.simple.JSONObject;
+
+public class ClientEventManager implements ClientListener{
     @Override
     public void unknownHost() {
         System.out.println("unknownHost");
@@ -11,9 +14,20 @@ public class TempClientListener implements ClientListener{
         System.out.println("couldNotConnect");
     }
 
+
+    private Scene.MessageListener messageListener;
+    public void setMessageListener(Scene.MessageListener messageListener) {
+        this.messageListener = messageListener;
+    }
+
     @Override
-    public void recivedInput(String msg) {
-        System.out.println("recivedInput: " + msg);
+    public void receivedInput(String msg) {
+        //System.out.println("recivedInput: " + msg);
+    }
+
+    @Override
+    public void receivedJSONInput(JSONObject object) {
+        messageListener.receivedJSONInput(object);
     }
 
     @Override

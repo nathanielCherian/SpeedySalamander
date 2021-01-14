@@ -45,6 +45,10 @@ public class Player extends Paintable{
 
     }
 
+    public Player(JSONObject object){ //not to be used
+        setFromJSON(object);
+    }
+
 
     void createAvatarImage(){
         // Creating images
@@ -115,7 +119,9 @@ public class Player extends Paintable{
                 }
                 speed *= -1;
             }else if(obj2.isCollectable){
-                obj2.toDelete = true;
+
+                obj2.onDelete(); //Delete object
+                //obj2.toDelete = true;
 
                 if(obj2.ID == Game.COIN){
                     executeCoinCollectListener((Coin) obj2);
@@ -158,13 +164,6 @@ public class Player extends Paintable{
         avatarAnimationState += 1;
         avatarAnimationState %= 8;
 
-
-        /*
-        Ellipse2D shape = new Ellipse2D.Double(x,y,r,r);
-        g2d.setColor(Color.red);
-        g2d.fill(shape);
-        */
-
     }
 
 
@@ -177,11 +176,14 @@ public class Player extends Paintable{
 
     );
 
+    Boolean toggle = true;
     Set<Integer> pressed_keys;
     public void digest_keys(Set<Integer> pressed_keys){
         this.pressed_keys = pressed_keys;
         if(pressed_keys.size() == 0){
             avatarMotionState = 0;
+            if(toggle)onChange();
+            toggle=false;
             return;
         }else if(pressed_keys.contains(16)){ //SPRINT
             speed = 10;
@@ -196,6 +198,8 @@ public class Player extends Paintable{
         }
 
 
+        toggle=true;
+        onChange(); //If user has pressed key relay message
     }
 
     public void checkCollisions(ArrayList<Paintable> objects){
@@ -245,13 +249,24 @@ public class Player extends Paintable{
 
         JSONObject object = new JSONObject();
         object.put("playerID", playerID);
-        object.put("ID", ID);
+        object.put("G_ID", "EPLAYER");//This must be eplayer as it is sent to server
+        object.put("M_ID", MULTIPLAYER_ID);
         object.put("xPos", x);
         object.put("yPos", y);
         object.put("avatarMotionState", avatarMotionState);
         object.put("avatarFacing", avatarFacing);
 
         return object;
+    }
+
+    public void setFromJSON(JSONObject object){
+        this.playerID = ((Long)object.get("playerID")).intValue();
+        this.ID = (String) object.get("G_ID");
+        this.MULTIPLAYER_ID = (String) object.get("M_ID");
+        this.x = ((Long)object.get("xPos")).intValue();
+        this.y = ((Long)object.get("yPos")).intValue();
+        this.avatarMotionState = ((Long)object.get("avatarMotionState")).intValue();
+        this.avatarFacing = ((Long)object.get("avatarFacing")).intValue();
     }
 
 }

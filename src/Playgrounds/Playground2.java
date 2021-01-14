@@ -1,3 +1,4 @@
+//copyright Alex Titov
 package Playgrounds;
 
 import javax.swing.JFrame;

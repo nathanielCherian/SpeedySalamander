@@ -1,5 +1,6 @@
 package Game;
 
+import Game.Multiplayer.Client;
 import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
@@ -7,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 public abstract class Paintable {
 
@@ -25,24 +27,34 @@ public abstract class Paintable {
 
     public Paintable(){
         //Empty constructor
+        generateMID();
     }
 
     public Paintable(int x, int y){
         this.x = x;
         this.y = y;
+
+        generateMID();
     }
 
-    public void paint(Graphics2D g2d){}
+    public Paintable(JSONObject object){
+        setFromJSON(object);
+    }
 
+    //Painters
+    public void paint(Graphics2D g2d){}
     public void paintBox(Graphics2D g2d){
         g2d.draw(getBoundingBox());
     }
 
+    //Shape
     public Rectangle getBoundingBox(){
         return new Rectangle(x, y, width, height);
     }
 
 
+
+    //File Loaders
     public String basepath = new File("").getAbsolutePath();
     public BufferedImage loadImage(String filePath){
         BufferedImage img = null;
@@ -54,6 +66,20 @@ public abstract class Paintable {
         return img;
     }
 
+    //Utils
+    Random rand = new Random();
+    String charString = "abcdefghijklmnopqrstuvwxyz0123456789";
+    int MID_LENGTH = 7;
+    public void generateMID(){
+        MULTIPLAYER_ID = "";
+        for(int i=0;i<7;i++){
+            MULTIPLAYER_ID += charString.charAt(rand.nextInt(charString.length()));
+        }
+    }
+
+
+
+    //JSON's
     public JSONObject toJSON(){
         JSONObject object = new JSONObject();
         object.put("G_ID", ID); //game id
@@ -63,8 +89,37 @@ public abstract class Paintable {
         return object;
     }
 
+    public void setFromJSON(JSONObject object){
+        this.ID = (String) object.get("G_ID");
+        this.MULTIPLAYER_ID = (String) object.get("M_ID");
+        this.x = ((Long)object.get("xPos")).intValue();
+        this.y = ((Long)object.get("yPos")).intValue();
+    }
+
     public static Paintable createFromJSON(JSONObject object){
         return null;
+    }
+
+
+    //Linking Client object to all inherited objects
+    private Client client;
+    private Client.ClientUpdateListener clientUpdateListener;
+    public void setClient(Client client) {
+        this.client = client;
+        this.clientUpdateListener = client.clientUpdateListener; //linking listener
+    }
+
+    public void onCreate(){
+        clientUpdateListener.onCreate(this);
+    }
+
+    public void onDelete(){
+        toDelete = true;
+        clientUpdateListener.onDelete(this);
+    }
+
+    public void onChange(){
+        clientUpdateListener.onChange(this);
     }
 
 

@@ -4,7 +4,7 @@ import Game.Entities.Player;
 import Game.GUI.Border;
 import Game.GUI.HealthBar;
 import Game.Multiplayer.Client;
-import Game.Multiplayer.TempClientListener;
+import Game.Multiplayer.ClientEventManager;
 import Game.Objects.Coin;
 import Game.Objects.SmallRocks;
 import Game.Objects.ThornBush;
@@ -23,8 +23,8 @@ public class Board extends JPanel {
     public int TICK_SPEED = 50;
     Player player = new Player(PLAYER_ID);
 
-    public boolean MULTIPLAYER_ENABLED = false;
-    Client client;
+    public boolean MULTIPLAYER_ENABLED = true;
+    Client client = new Client(); // Daemon Thread not started yet
 
     Scene scene = new Scene();
 
@@ -32,14 +32,21 @@ public class Board extends JPanel {
 
     public Board(){
 
-        timer.start();
-
+        scene.setClient(client);
         if(MULTIPLAYER_ENABLED){
-            client = new Client("127.0.0.1", 8888, new TempClientListener());
+            client.setPLAYER_ID(PLAYER_ID);
+            client.setInitialSceneListener(scene.initialSceneListener);
+
+            ClientEventManager clientEventManager = new ClientEventManager();
+            clientEventManager.setMessageListener(scene.messageListener);
+            client.startClient("76.176.58.233", 8888, clientEventManager);
         }
 
-
         packScene();
+
+
+        timer.start();
+
 
         addKeyListener(new GameKeyListener());
         setFocusable(true);
@@ -63,21 +70,26 @@ public class Board extends JPanel {
         //add Background
         scene.addBackground(new Background());
         scene.addPlayer(player);
+        player.onCreate();
 
-        //Add objects
-        scene.add(new Tree(100,100));
-        scene.add(new Tree(140,100));
-        scene.add(new SmallRocks(250,200));
-        scene.add(new ThornBush(50,50));
-        scene.add(new Coin(300,300));
+        if(!MULTIPLAYER_ENABLED){ //THIS IS TEMP
+            //Add objects
+            scene.add(new Tree(100,100));
+            scene.add(new Tree(140,100));
+            scene.add(new SmallRocks(250,200));
+            scene.add(new ThornBush(50,50));
+            scene.add(new Coin(300,300));
+            //System.out.println(scene.toJSON());
+        }
+
+
 
         //Add GUI Elements
         Border b = new Border();
-        scene.add(b);
+        scene.addGUIElement(b);
         HealthBar hb = new HealthBar(25, 75);
         scene.addGUIElement(hb);
 
-        System.out.println(scene.toJSON());
 
         //register listeners for scene
         player.addCoinCollectListener(scene.coinCollected);
@@ -112,9 +124,6 @@ public class Board extends JPanel {
         scene.paint(g2d);
 
 
-        if(MULTIPLAYER_ENABLED){
-            client.send(scene.player.toJSON().toJSONString());
-        }
 
     }
 

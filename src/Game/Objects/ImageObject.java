@@ -1,6 +1,7 @@
 package Game.Objects;
 
 import Game.Paintable;
+import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -15,6 +16,9 @@ public abstract class ImageObject extends Paintable {
 
     public ImageObject(int x, int y) {
         super(x, y);
+    }
+    public ImageObject(JSONObject object) {
+        super(object);
     }
 
 

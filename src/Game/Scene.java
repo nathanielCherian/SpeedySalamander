@@ -3,14 +3,18 @@ package Game;
 import Game.Entities.Player;
 import Game.GUI.BasicElement;
 import Game.Listeners.CoinCollectListener;
+import Game.Multiplayer.Client;
+import Game.Multiplayer.ClientListener;
 import Game.Objects.Coin;
 import Game.Sounds.Sound;
-import com.amazonaws.services.dynamodbv2.xspec.S;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Scene{
@@ -38,12 +42,16 @@ public class Scene{
 
 
     public void add(Paintable o){
+        o.setClient(client);
         children.add(o);
     } //adding children directly
-    //adding children while still in game loop, avoid concurrent modification error
-    public void addToWaitingList(Paintable o){ childrenQueue.add(o); }
+    public void addToWaitingList(Paintable o){
+        o.setClient(client);
+        childrenQueue.add(o); } //adding children while still in game loop, avoid concurrent modification error
 
+    //Specific elements
     public void addPlayer(Player p){
+        p.setClient(client);
         player = p;
     }
     public void addBackground(Paintable o){
@@ -54,6 +62,7 @@ public class Scene{
     }
 
 
+    //Paint
     public void paint(Graphics2D g2d){
 
         //All paintables must be drawn in this order
@@ -83,6 +92,7 @@ public class Scene{
 
     }
 
+
     //Periodically call to update scene
     public void purgeChildren(){
         children.removeIf(child -> child.toDelete);
@@ -93,10 +103,20 @@ public class Scene{
     }
 
 
-    public void fillSceneFromJSON(JSONObject object){
 
+    //Multiplayer section
+    private Client client;
+    private Client.ClientUpdateListener clientUpdateListener;
+    public void setClient(Client client) {
+        this.client = client;
+        this.clientUpdateListener = client.clientUpdateListener; //linking listener
     }
 
+
+
+
+
+    //began to shift children to hashmap
     public JSONObject toJSON(){
 
         JSONObject scene = new JSONObject();
@@ -104,29 +124,121 @@ public class Scene{
         scene.put("background", background.ID);
         scene.put("mainPlayer", player.toJSON());
 
+        JSONObject childrenObject = new JSONObject();
+        for(Paintable child: children){
+            childrenObject.put(child.MULTIPLAYER_ID, child.toJSON());
+        }
+
+        /*
         JSONArray childrenArray = new JSONArray();
         for(Paintable child: children){
             childrenArray.add(child.toJSON());
         }
+        */
 
-        scene.put("children", childrenArray);
+        scene.put("children", childrenObject);
 
         return scene;
     }
 
 
+    public Paintable getChildByMID(String MID){
+
+
+        for(Paintable child: children){
+            if(child.MULTIPLAYER_ID.equals(MID)){
+                return child;
+            }
+        }
+
+        return null;
+    }
+
+    public InitialSceneListener initialSceneListener = new InitialSceneListener();
+    public class InitialSceneListener{
+        public void receivedInput(String msg) {
+            System.out.println(msg);
+            fillSceneFromJSONString(msg);
+        }
+    }
+
+    public void fillSceneFromJSONString(String msg){
+        JSONObject object;
+        try{
+            JSONParser parser = new JSONParser();
+            object = (JSONObject) parser.parse(msg);
+
+            String background = (String) object.get("background");
+
+
+            JSONObject children = (JSONObject) object.get("children");
+            children.forEach((MID, child) -> {
+                Paintable p = Game.getObject((JSONObject) child);
+                add(p);
+            });
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public MessageListener messageListener = new MessageListener();
+    public class MessageListener{
+        public void receivedJSONInput(JSONObject object) {
+            updateSceneFromJSON(object);
+        }
+    }
+
+    public void updateSceneFromJSON(JSONObject object){
+        System.out.println("object: "+object);
+
+        String code = (String) object.get("stateCode");
+        JSONObject paintableJSON = (JSONObject) object.get("object");
+        String MID = (String) paintableJSON.get("M_ID");
+
+        switch (code){
+            case "CREATE":
+                {
+                    Paintable p = Game.getObject(paintableJSON);
+                    add(p);
+                }
+                break;
+
+            case "CHANGE":
+                {
+                    Paintable p = getChildByMID(MID);
+                    if(p==null)break;
+                    p.setFromJSON(paintableJSON);
+                }
+                break;
+            case "DELETE":
+                {
+                    Paintable p = getChildByMID(MID);
+                    if(p==null)break;
+                    p.toDelete = true;
+                }
+                break;
+            default:
+                break;
+
+        }
+    }
 
 
 
-    Random rand = new Random();
     //Listeners
+    Random rand = new Random();
     private class CoinCollected implements CoinCollectListener {
         @Override
         public void onCollectCoin(Coin coin) {
             //Adding a coin
 
             Sound.setPlaySound("\\src\\Game\\Resources\\Sounds\\Coin\\coin.wav");
-            addToWaitingList(new Coin(rand.nextInt(300), rand.nextInt(300)));
+            Coin c = new Coin(rand.nextInt(300), rand.nextInt(300));
+            addToWaitingList(c);
+
+            c.onCreate();
         }
     }
 

@@ -1,6 +1,7 @@
 package Game.Objects;
 
 import Game.Paintable;
+import org.json.simple.JSONObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,6 +19,7 @@ public abstract class AnimatedObject extends Paintable {
     public AnimatedObject(int x, int y) {
         super(x, y);
     }
+    public AnimatedObject(JSONObject object){super(object);}
 
     public void setImageStates(){ }
 

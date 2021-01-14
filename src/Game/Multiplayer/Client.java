@@ -1,7 +1,14 @@
 package Game.Multiplayer;
 
+import Game.Listeners.UpdateListener;
+import Game.Paintable;
+import Game.Scene;
 import com.amazonaws.services.dynamodbv2.xspec.S;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +25,25 @@ public class Client {
 
     public boolean open = true;
 
-    public Client(String ip, int port, ClientListener listener){
+    public ClientUpdateListener clientUpdateListener;
+    public Client(){
+        clientUpdateListener = new EmptyClientUpdateListener(); //Start with empty so no messages are sent
+
+    }
+
+    private Scene.InitialSceneListener initialSceneListener;
+    public void setInitialSceneListener(Scene.InitialSceneListener initialSceneListener) {
+        this.initialSceneListener = initialSceneListener;
+    }
+
+    private int PLAYER_ID;
+    public void setPLAYER_ID(int PLAYER_ID) {
+        this.PLAYER_ID = PLAYER_ID;
+    }
+
+    public void startClient(String ip, int port, ClientListener listener){
+
+        clientUpdateListener = new ClientUpdateListener(); //Switch Client listener
 
         clientListener = listener;
         try{
@@ -27,6 +52,11 @@ public class Client {
 
             in=new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out=new PrintWriter(socket.getOutputStream(), true);
+
+            String initialScene = in.readLine();
+            if(initialScene==null)return;
+            initialSceneListener.receivedInput(initialScene);
+
 
             Thread clientThread = new Thread(new ClientRunnable());
             clientThread.setName("GAME: client listener");
@@ -59,6 +89,7 @@ public class Client {
         @Override
         public void run() {
 
+            JSONParser parser = new JSONParser();
             while (open){
 
                 try{
@@ -78,7 +109,9 @@ public class Client {
                         }
                     }
 
-                    clientListener.recivedInput(msg);
+                    JSONObject object = (JSONObject) parser.parse(msg);
+                    clientListener.receivedJSONInput(object);
+                    clientListener.receivedInput(msg);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -94,6 +127,8 @@ public class Client {
                         ioException.printStackTrace();
                     }
 
+                }catch (ParseException e){
+                    e.printStackTrace();
                 }
 
 
@@ -124,6 +159,57 @@ public class Client {
 
     public boolean isConnected(){
         return open;
+    }
+
+
+    //This class will send messages
+    public class ClientUpdateListener implements UpdateListener {
+        @Override
+        public void onCreate(Paintable p) {
+            //System.out.println("created! " + p);
+            sendJSONString(p, "CREATE");
+        }
+
+        @Override
+        public void onChange(Paintable p) {
+            //System.out.println("changed! " + p);
+            sendJSONString(p, "CHANGE");
+        }
+
+        @Override
+        public void onDelete(Paintable p) {
+            //System.out.println("deleted! " + p);
+            sendJSONString(p, "DELETE");
+        }
+
+
+        public void sendJSONString(Paintable p, String code){
+            JSONObject object = new JSONObject();
+            object.put("playerID", PLAYER_ID);
+            object.put("stateCode", code);
+            object.put("object", p.toJSON());
+            send(object.toJSONString());
+        }
+
+    }
+
+
+    //Goes to nowhere
+    public class EmptyClientUpdateListener extends ClientUpdateListener {
+        @Override
+        public void onCreate(Paintable p) {
+            //System.out.println("created!");
+        }
+
+        @Override
+        public void onChange(Paintable p) {
+            //System.out.println("changed!");
+        }
+
+        @Override
+        public void onDelete(Paintable p) {
+            //System.out.println("deleted!");
+        }
     }
 
 }

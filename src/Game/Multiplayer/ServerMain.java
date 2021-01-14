@@ -1,5 +1,9 @@
 package Game.Multiplayer;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,8 +18,11 @@ public class ServerMain {
     private static ServerSocket ss;
     private static ArrayList<Socket> clients = new ArrayList<>();
 
+    private static ServerScene serverScene;
+
     public static void main(String args[]) throws IOException {
 
+        serverScene = new ServerScene();
 
         ss = new ServerSocket(port);
         //Check if port is free later
@@ -30,6 +37,8 @@ public class ServerMain {
     }
 
 
+    public static ArrayList<ClientThreadRunnable> clientThreadRunnables = new ArrayList<>();
+
     static class ServerRunnable implements Runnable{
 
         @Override
@@ -43,7 +52,9 @@ public class ServerMain {
 
                     Socket s = ss.accept();
 
-                    Thread clientThread = new Thread(new ClientThreadRunnable(s));
+                    ClientThreadRunnable clientThreadRunnable = new ClientThreadRunnable(s);
+                    clientThreadRunnables.add(clientThreadRunnable);
+                    Thread clientThread = new Thread(clientThreadRunnable);
                     clientThread.setDaemon(true);
                     clientThread.setName("Client " + s.getInetAddress().toString());
                     clientThread.start();
@@ -66,24 +77,43 @@ public class ServerMain {
             this.s = s;
         }
 
+        public BufferedReader in;
+        public PrintWriter out;
+
         @Override
         public void run() {
             System.out.println("client connected!");
             clients.add(s);
 
             try {
-                BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-                PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+                in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+                out = new PrintWriter(s.getOutputStream(), true);
+
+                out.println(serverScene.getSceneAsJSON());
+                JSONParser parser = new JSONParser();
 
                 while (open){
-                    System.out.println("RECIEVED: " + in.readLine());
+                    String msg;
+                    if((msg = in.readLine()) == null)break;
+                    JSONObject object = (JSONObject) parser.parse(msg);
+                    System.out.println("RECIEVED: " + msg);
+                    serverScene.updateFromJSON(object);
+                    //System.out.println(serverScene.getSceneAsJSON());
+
+                    clientThreadRunnables.forEach(client->{
+                        if(client != this){
+                            client.out.println(msg);
+                        }
+                    });
+
                 }
 
-            } catch (IOException e) {
+            } catch (IOException | ParseException e) {
                 e.printStackTrace();
 
             }finally {
                 clients.remove(s);
+                clientThreadRunnables.remove(this);
                 try {
                     s.close();
                 } catch (IOException e) {

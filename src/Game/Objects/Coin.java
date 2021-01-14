@@ -1,6 +1,7 @@
 package Game.Objects;
 
 import Game.Listeners.Listener;
+import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -12,12 +13,21 @@ public class Coin extends AnimatedObject {
 
     public Coin(int x, int y) {
         super(x, y);
+        init();
+    }
+
+    public Coin(JSONObject object){
+        super(object);
+        init();
+    }
+
+
+    private void init(){
         setImageStates();
         this.ID = "COIN";
-
-
         this.isCollectable = true;
     }
+
 
 
     @Override

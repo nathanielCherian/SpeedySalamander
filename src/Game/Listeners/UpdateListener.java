@@ -3,5 +3,7 @@ package Game.Listeners;
 import Game.Paintable;
 
 public interface UpdateListener {
-    public void onUpdate(Paintable p);
+    public void onCreate(Paintable p);
+    public void onChange(Paintable p);
+    public void onDelete(Paintable p);
 }
