@@ -4,16 +4,8 @@ package Game;
 
 
 import Game.Entities.ExternalPlayer;
-import Game.Objects.Coin;
-import Game.Objects.SmallRocks;
-import Game.Objects.ThornBush;
-import Game.Objects.Tree;
-import com.amazonaws.services.dynamodbv2.xspec.B;
-import netscape.javascript.JSObject;
+import Game.Objects.*;
 import org.json.simple.JSONObject;
-
-import java.awt.*;
-import java.util.HashMap;
 
 public class Game {
 
@@ -26,6 +18,7 @@ public class Game {
     public static final String TREE = "TREE";
     public static final String SMALL_ROCKS = "SMALLROCKS";
     public static final String THORN_BUSH = "THORNBUSH";
+    public static final String BENNYFIRE = "BENNYFIRE";
     public static final String COIN = "COIN";
 
 
@@ -45,6 +38,8 @@ public class Game {
                 return new ThornBush(object);
             case COIN:
                 return new Coin(object);
+            case BENNYFIRE:
+                return new BennyFire(object);
             default:
                 break;
         }
