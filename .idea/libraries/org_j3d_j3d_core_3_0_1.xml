@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.j3d:j3d-core:3.0.1" type="repository">
+    <properties maven-id="org.j3d:j3d-core:3.0.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/j3d/j3d-core/3.0.1/j3d-core-3.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
