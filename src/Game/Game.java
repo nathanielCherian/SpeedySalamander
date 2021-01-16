@@ -20,7 +20,7 @@ public class Game {
     public static final String THORN_BUSH = "THORNBUSH";
     public static final String COIN = "COIN";
     public static final String BENNYFIRE = "FIRE";
-
+    public static final String DOG = "DOG";
 
     public static final Paintable getObject(JSONObject object){
 
@@ -40,6 +40,8 @@ public class Game {
                 return new Coin(object);
             case BENNYFIRE:
                 return new BennyFire(object);
+            case DOG:
+                return new Dog(object);
             default:
                 break;
         }

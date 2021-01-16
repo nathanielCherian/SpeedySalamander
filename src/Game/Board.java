@@ -77,6 +77,7 @@ public class Board extends JPanel {
             scene.add(new ThornBush(50,50));
             scene.add(new Coin(300,300));
             scene.add(new BennyFire(300, 250));
+            scene.add(new Dog(300, 150));
             //System.out.println(scene.toJSON());
         }
 
