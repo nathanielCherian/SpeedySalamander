@@ -9,7 +9,7 @@
 - [Contributers](https://github.com/nathanielCherian/SpeedySalamanders#contributers)
 ## Completed Goals
 - [Issues](https://github.com/nathanielCherian/SpeedySalamanders/issues) bug fixes with image rendering, fixed with resizing and "cleaning"
-- [AP FRQ](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/APFRQ)implementation Units 3, 4, & 5
+- [AP FRQ](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/APFRQ) implementation Units 3, 4, & 5
 - [New Objects](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/Game/Objects) fire particles and dog (will become interactive)
 - [Multiplayer](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/Game/Multiplayer) functionality working properly
 
