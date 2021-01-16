@@ -19,7 +19,7 @@ public class Game {
     public static final String SMALL_ROCKS = "SMALLROCKS";
     public static final String THORN_BUSH = "THORNBUSH";
     public static final String COIN = "COIN";
-    public static final String BENNYFIRE = "FIRE";
+    public static final String FIRE = "FIRE";
     public static final String DOG = "DOG";
 
     public static final Paintable getObject(JSONObject object){
@@ -38,8 +38,8 @@ public class Game {
                 return new ThornBush(object);
             case COIN:
                 return new Coin(object);
-            case BENNYFIRE:
-                return new BennyFire(object);
+            case FIRE:
+                return new Fire(object);
             case DOG:
                 return new Dog(object);
             default:

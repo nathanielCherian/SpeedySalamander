@@ -7,12 +7,11 @@
 - [Contributions](https://github.com/nathanielCherian/SpeedySalamanders/graphs/contributors)
 - [About](https://github.com/nathanielCherian/SpeedySalamanders#about)
 - [Contributers](https://github.com/nathanielCherian/SpeedySalamanders#contributers)
-## Project Instructions
-- Set Board.java line 23 MULTIPLAYER_ENABLED = false
-- Run project from Home.main
-- Use WASD to move character
-- Collecting coins around the map will spawn more coins
-- Thornbush damages your character
+## Completed Goals
+- [Issues](https://github.com/nathanielCherian/SpeedySalamanders/issues) bug fixes with image rendering, fixed with resizing and "cleaning"
+- [AP FRQ](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/APFRQ) implementation Units 3, 4, & 5
+- [New Objects](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/Game/Objects) fire particles and dog (will become interactive)
+- [Multiplayer](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/Game/Multiplayer) functionality working properly
 
 ## Usage
 Install the following dependencies with Maven

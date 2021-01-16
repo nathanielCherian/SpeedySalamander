@@ -20,7 +20,12 @@ public class Board extends JPanel {
     public int TICK_SPEED = 50;
     Player player = new Player(PLAYER_ID);
 
-    public boolean MULTIPLAYER_ENABLED = false;
+    // ------------------------------------------
+    public boolean MULTIPLAYER_ENABLED = true;
+    public String IP = "76.176.58.233";
+    public int PORT = 8888;
+    // --------------------------------------------
+
     Client client = new Client(); // Daemon Thread not started yet
 
     Scene scene = new Scene();
@@ -36,7 +41,7 @@ public class Board extends JPanel {
 
             ClientEventManager clientEventManager = new ClientEventManager();
             clientEventManager.setMessageListener(scene.messageListener);
-            client.startClient("76.176.58.233", 8888, clientEventManager);
+            client.startClient(IP, PORT, clientEventManager);
         }
 
         packScene();
@@ -76,7 +81,7 @@ public class Board extends JPanel {
             scene.add(new SmallRocks(250,200));
             scene.add(new ThornBush(50,50));
             scene.add(new Coin(300,300));
-            scene.add(new BennyFire(300, 250));
+            scene.add(new Fire(300, 250));
             scene.add(new Dog(300, 150));
             //System.out.println(scene.toJSON());
         }
