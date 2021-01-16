@@ -1,7 +1,8 @@
 # SpeedySalamanders
 
 ## Quick Links
-- [Kanban](https://github.com/nathanielCherian/SpeedySalamanders/projects/1)
+- [Kanban](https://github.com/nathanielCherian/SpeedySalamanders/projects/1) Includes cards/tickets
+- [Issues](https://github.com/nathanielCherian/SpeedySalamanders/issues)
 - [Project Plan](https://docs.google.com/document/d/1mY7egnD32HIzg7C8C9wMr7rFPewVq4cXQqh_mbIy8mc/edit?usp=sharing)
 - [Contributions](https://github.com/nathanielCherian/SpeedySalamanders/graphs/contributors)
 - [About](https://github.com/nathanielCherian/SpeedySalamanders#about)
