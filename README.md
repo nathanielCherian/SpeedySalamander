@@ -12,7 +12,12 @@
 - [AP FRQ](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/APFRQ) implementation Units 3, 4, & 5
 - [New Objects](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/Game/Objects) fire particles and dog (will become interactive)
 - [Multiplayer](https://github.com/nathanielCherian/SpeedySalamanders/tree/master/src/Game/Multiplayer) functionality working properly
-
+## Project Instructions
+- Set Board.java line 23 MULTIPLAYER_ENABLED = false
+- Run project from Home.main
+- WASD to move character
+- Collect coins to spawn more coins
+- Thorn bush damages characters
 ## Usage
 Install the following dependencies with Maven
 - ```com.amazonaws:aws-java-sdk-dynamodb:1.11.911```
