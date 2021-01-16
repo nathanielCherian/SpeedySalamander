@@ -5,10 +5,7 @@ import org.json.simple.JSONObject;
 public class BennyFire extends ImageObject{
     public BennyFire(int x, int y) {
         super(x, y);
-        this.ID = "bennyfire";
-        setImage("\\src\\Game\\Resources\\Objects\\fire1_64.png");
-
-        this.isSolid = false;
+        init();
     }
 
     public BennyFire(JSONObject object){
@@ -18,7 +15,7 @@ public class BennyFire extends ImageObject{
 
     private void init(){
         this.ID = "BENNYFIRE";
-        setImage("\\src\\Game\\Resources\\Objects\\fire1_64.png");
+        setImage("\\src\\Game\\Resources\\Objects\\pixelfirenew.png");
         this.isSolid = false;
     }
 }

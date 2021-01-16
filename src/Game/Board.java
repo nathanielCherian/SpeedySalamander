@@ -5,10 +5,7 @@ import Game.GUI.Border;
 import Game.GUI.HealthBar;
 import Game.Multiplayer.Client;
 import Game.Multiplayer.ClientEventManager;
-import Game.Objects.Coin;
-import Game.Objects.SmallRocks;
-import Game.Objects.ThornBush;
-import Game.Objects.Tree;
+import Game.Objects.*;
 
 import java.awt.event.*;
 import java.util.*;
@@ -23,7 +20,7 @@ public class Board extends JPanel {
     public int TICK_SPEED = 50;
     Player player = new Player(PLAYER_ID);
 
-    public boolean MULTIPLAYER_ENABLED = true;
+    public boolean MULTIPLAYER_ENABLED = false;
     Client client = new Client(); // Daemon Thread not started yet
 
     Scene scene = new Scene();
@@ -79,6 +76,7 @@ public class Board extends JPanel {
             scene.add(new SmallRocks(250,200));
             scene.add(new ThornBush(50,50));
             scene.add(new Coin(300,300));
+            scene.add(new BennyFire(300, 250));
             //System.out.println(scene.toJSON());
         }
 

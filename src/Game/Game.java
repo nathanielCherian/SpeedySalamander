@@ -18,8 +18,8 @@ public class Game {
     public static final String TREE = "TREE";
     public static final String SMALL_ROCKS = "SMALLROCKS";
     public static final String THORN_BUSH = "THORNBUSH";
-    public static final String BENNYFIRE = "BENNYFIRE";
     public static final String COIN = "COIN";
+    public static final String BENNYFIRE = "FIRE";
 
 
     public static final Paintable getObject(JSONObject object){

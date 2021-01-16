@@ -34,7 +34,6 @@ public class Home extends JFrame {
         panelCont.add(board, "2");
         cl.show(panelCont, "1");
 
-
         //add(new Board());
 
         add(panelCont);
