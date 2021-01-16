@@ -1,6 +1,6 @@
 package APFRQ.Unit3;
 
-class unit3 {
+class Unit3 {
     public static void main(String[] args) {
         boolean rsvp = true;
         String option1 = "";

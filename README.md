@@ -7,6 +7,12 @@
 - [Contributions](https://github.com/nathanielCherian/SpeedySalamanders/graphs/contributors)
 - [About](https://github.com/nathanielCherian/SpeedySalamanders#about)
 - [Contributers](https://github.com/nathanielCherian/SpeedySalamanders#contributers)
+## Project Instructions
+- Set Board.java line 23 MULTIPLAYER_ENABLED = false
+- Run project from Home.main
+- Use WASD to move character
+- Collecting coins around the map will spawn more coins
+- Thornbush damages your character
 
 ## Usage
 Install the following dependencies with Maven
