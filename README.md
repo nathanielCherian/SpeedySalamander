@@ -7,6 +7,8 @@
 - [Contributions](https://github.com/nathanielCherian/SpeedySalamanders/graphs/contributors)
 - [About](https://github.com/nathanielCherian/SpeedySalamanders#about)
 - [Contributers](https://github.com/nathanielCherian/SpeedySalamanders#contributers)
+## Completed Goals
+- [Issues](https://github.com/nathanielCherian/SpeedySalamanders/issues) bug fixes
 
 ## Usage
 Install the following dependencies with Maven
