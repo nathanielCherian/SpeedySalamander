@@ -21,7 +21,7 @@ public class Board extends JPanel {
     Player player = new Player(PLAYER_ID);
 
     // ------------------------------------------
-    public boolean MULTIPLAYER_ENABLED = true;
+    public boolean MULTIPLAYER_ENABLED = false;
     public String IP = "76.176.58.233";
     public int PORT = 8888;
     // --------------------------------------------
@@ -83,6 +83,7 @@ public class Board extends JPanel {
             scene.add(new Coin(300,300));
             scene.add(new Fire(300, 250));
             scene.add(new Dog(300, 150));
+            scene.add(new Chicken(200, 200));
             //System.out.println(scene.toJSON());
         }
 
