@@ -21,18 +21,44 @@ public class Board extends JPanel {
     Player player = new Player(PLAYER_ID);
 
     // ------------------------------------------
-    public boolean MULTIPLAYER_ENABLED = true;
-    public String IP = "76.176.58.233";
-    public int PORT = 8888;
+    private boolean MULTIPLAYER_ENABLED = false;
+    private String IP = "76.176.58.233";
+    private int PORT = 8888;
+
+    public void setMultiplayerData(String IP, int PORT){
+        this.MULTIPLAYER_ENABLED = true;
+        this.IP = IP;
+        this.PORT = PORT;
+    }
+
     // --------------------------------------------
 
     Client client = new Client(); // Daemon Thread not started yet
 
     Scene scene = new Scene();
 
+    private Boolean DEBUG = false;
 
 
     public Board(){
+
+
+        if(DEBUG){
+            initializeBoard();
+        }
+
+        //Needed after panel switch
+        this.addComponentListener( new ComponentAdapter() {
+            @Override
+            public void componentShown( ComponentEvent e ) {
+                Board.this.requestFocusInWindow();
+            }
+        });
+
+    }
+
+
+    public void initializeBoard(){
 
         scene.setClient(client);
         if(MULTIPLAYER_ENABLED){
@@ -46,25 +72,12 @@ public class Board extends JPanel {
 
         packScene();
 
-
         timer.start();
-
 
         addKeyListener(new GameKeyListener());
         setFocusable(true);
-
-
-
-
-        //Needed after panel switch
-        this.addComponentListener( new ComponentAdapter() {
-            @Override
-            public void componentShown( ComponentEvent e ) {
-                Board.this.requestFocusInWindow();
-            }
-        });
-
     }
+
 
 
     void packScene(){

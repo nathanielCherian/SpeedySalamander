@@ -34,7 +34,11 @@ public class Scene{
     public CoinCollected coinCollected = new CoinCollected();
 
 
-    boolean DEBUG = false;
+    private boolean DEBUG = false;
+    public void setDEBUG(boolean DEBUG){
+        this.DEBUG = DEBUG;
+    }
+
 
     public Scene(){
 

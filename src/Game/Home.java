@@ -19,7 +19,6 @@ public class Home extends JFrame {
 
     TitleScreen titleScreen = new TitleScreen();
     Board board = new Board();
-    MultiplayerScreen multiplayerScreen = new MultiplayerScreen();
 
     CardLayout cl = new CardLayout();
 
@@ -31,13 +30,15 @@ public class Home extends JFrame {
 
         panelCont.setLayout(cl);
         titleScreen.setCardLayout(cl, panelCont);
+
+        titleScreen.setBoard(board);
         panelCont.add(titleScreen, "1");
         panelCont.add(board, "2");
+
         cl.show(panelCont, "1");
-
-
         add(panelCont);
         pack();
+
     }
 
 
