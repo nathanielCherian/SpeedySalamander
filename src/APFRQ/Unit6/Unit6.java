@@ -8,7 +8,7 @@ public class Unit6 {
 
     public static void main(String[] args) {
 
-        question1(new String[]{"ten", "fading", "post", "card", "thunder"});
+        question1(new String[]{"ten", "fading", "post", "card", "thunder", "hinge", "trailing", "batting"});
 
         Payroll payroll = new Payroll();
         System.out.println(payroll.computeBonusThreshold());
@@ -21,7 +21,7 @@ public class Unit6 {
         for(String string: strings){
             int length;
             if((length=string.length()) < 3) continue;
-            String substring = string.substring(length-3, length);
+            String substring = string.substring(length-3);
             if(substring.equals("ing")){
                 System.out.println(string);
             }
@@ -55,7 +55,7 @@ public class Unit6 {
 
             sum -= min+max;
 
-            return (double) sum/8;
+            return (double) sum/(itemsSold.length-2);
         }
 
         public void computeWages(double fixedWage, double perItemWage){
