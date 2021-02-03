@@ -1,5 +1,6 @@
 package Game.Multiplayer;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -94,9 +95,10 @@ public class ServerMain {
 
                 while (open){
                     String msg;
-                    if((msg = in.readLine()) == null)break;
-                    JSONObject object = (JSONObject) parser.parse(msg);
+                    JSONObject object;
+                    if((msg = in.readLine()) == null || (object = isValidJSON(msg)) == null)break;
                     System.out.println("RECIEVED: " + msg);
+                    //JSONObject object = (JSONObject) parser.parse(msg);
                     serverScene.updateFromJSON(object);
                     //System.out.println(serverScene.getSceneAsJSON());
 
@@ -108,7 +110,7 @@ public class ServerMain {
 
                 }
 
-            } catch (IOException | ParseException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
 
             }finally {
@@ -122,7 +124,20 @@ public class ServerMain {
             }
 
         }
+
+        public JSONObject isValidJSON(String msg){
+            JSONParser parser = new JSONParser();
+            try {
+                JSONObject object = (JSONObject) parser.parse(msg);
+                return object;
+            } catch (ParseException ex) {
+                return null;
+            }
+        }
+
     }
+
+
 
 
 }
