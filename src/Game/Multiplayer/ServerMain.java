@@ -1,17 +1,20 @@
 package Game.Multiplayer;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ServerMain {
     private static int port = 8888;
@@ -87,6 +90,13 @@ public class ServerMain {
             clients.add(s);
 
             try {
+
+                {
+                    validateHTTPHandshake(s);
+
+                }
+
+
                 in = new BufferedReader(new InputStreamReader(s.getInputStream()));
                 out = new PrintWriter(s.getOutputStream(), true);
 
@@ -96,9 +106,9 @@ public class ServerMain {
                 while (open){
                     String msg;
                     JSONObject object;
-                    if((msg = in.readLine()) == null || (object = isValidJSON(msg)) == null)break;
+                    if((msg = in.readLine()) == null /*|| (object = isValidJSON(msg)) == null*/)break;
                     System.out.println("RECIEVED: " + msg);
-                    //JSONObject object = (JSONObject) parser.parse(msg);
+                    object = (JSONObject) parser.parse(msg);
                     serverScene.updateFromJSON(object);
                     //System.out.println(serverScene.getSceneAsJSON());
 
@@ -110,7 +120,7 @@ public class ServerMain {
 
                 }
 
-            } catch (IOException e) {
+            } catch (IOException | ParseException e) {
                 e.printStackTrace();
 
             }finally {
@@ -134,6 +144,42 @@ public class ServerMain {
                 return null;
             }
         }
+
+
+        public void validateHTTPHandshake(Socket s) throws IOException {
+            InputStream in = s.getInputStream();
+            OutputStream out = s.getOutputStream();
+            Scanner sc = new Scanner(in, "UTF-8");
+            //System.out.println(sc.useDelimiter("\\r\\n\\r\\n").next());
+
+            try{
+                String data = sc.useDelimiter("\\r\\n\\r\\n").next();
+                Matcher get = Pattern.compile("^GET").matcher(data);
+
+                System.out.println(data);
+
+                if (get.find()) {
+                    Matcher match = Pattern.compile("Sec-WebSocket-Key: (.*)").matcher(data);
+                    match.find();
+                    byte[] response = ("HTTP/1.1 101 Switching Protocols\r\n"
+                            + "Connection: Upgrade\r\n"
+                            + "Upgrade: websocket\r\n"
+                            + "Sec-WebSocket-Accept: "
+                            + Base64.getEncoder().encodeToString(MessageDigest.getInstance("SHA-1").digest((match.group(1) + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").getBytes("UTF-8")))
+                            + "\r\n\r\n").getBytes("UTF-8");
+
+                    System.out.println("HEADER: \n" + new String(response, StandardCharsets.UTF_8));
+                    out.write(response, 0, response.length);
+                    System.out.println(sc.useDelimiter("\\r\\n\\r\\n").next());
+                }
+
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
 
     }
 
